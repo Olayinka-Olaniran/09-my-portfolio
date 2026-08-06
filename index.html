@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth scroll-pt-16">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="This is my personal website.">
+        <meta name="keywords" content="personal, website, portfolio">
+        <meta property="og:title" content="My Website">
+        <meta property="og:description" content="This is my personal website.">
+        <meta property="og:image" content="image.jpg">
+        <meta property="og:url" content="https://www.mywebsite.com">
+        <title>My Website</title>
+        <link rel="stylesheet" href="/src/styles.css">
+    </head>
+
+    <body> 
+        <header class="fixed top-0 left-0 bg-linear-to-r from-gray-800 to-gray-300 flex flex-row justify-around items-center text-white mb-3 h-auto w-full border-bottom">
+            
+            <div class="flex flex-row justify-center text-2xl font-bold w-1/2 text-center items-center p-2 ">
+                
+                <div class="relative w-8.5 h-8.5 rounded-full overflow-hidden shadow-2xl group">
+                    <!-- 1. Your Original Multi-Layer Image -->
+                    <img 
+                        src="/assets/icons/mylogo.png" 
+                        alt="Mountain Graphic" 
+                        class="w-full h-full object-cover scale-110 contrast-110 brightness-95" 
+                    />
+                    <!-- 2. The Color Harmonizer Overlay (Blends the layers together) -->
+                    <div class="absolute inset-0 bg-indigo-900/20 mix-blend-color pointer-events-none"></div>
+                    <!-- 3. The Atmospheric Lighting Tint (Softens harsh cloud & stairs transitions) -->
+                    <div class="absolute inset-0 bg-linear-to-t from-blue-950/40 via-transparent to-pink-400/10 mix-blend-overlay pointer-events-none"></div>
+                </div>
+                <h1 class="w-8/10 text-start pl-2">My Website</h1>
+            </div>
+
+            <button class="flex md:hidden p-2 w-1/2 justify-end " id="menu-toggle">
+                <!-- Hamburger menu button for smaller screens -->
+                <svg class="w-10 h-10 rounded-sm bg-linear-to-r from-gray-700 to-gray-500 active:bg-linear-to-r active:from-gray-900 active:to-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <nav class="hidden md:flex flex-col md:flex-row items-center md:w-1/2 h-full" id="menu">
+                <!-- Navigation menu with links to different sections of the website and collapses into a hamburger menu on smaller screens -->
+                <a class="font-bold text-center p-3 w-1/4 hover:bg-linear-to-r from-gray-900 to-gray-500" href="#home">Home</a>
+                <a class="font-bold text-center p-3 w-1/4 hover:bg-linear-to-r from-gray-900 to-gray-500" href="#about">About</a>
+                <a class="font-bold text-center p-3 w-1/4 hover:bg-linear-to-r from-gray-900 to-gray-500" href="#portfolio">Portfolio</a>
+                <a class="font-bold text-center p-3 w-1/4 hover:bg-linear-to-r from-gray-900 to-gray-500" href="#contact">Contact</a>
+            </nav>
+        </header>
+
+        <main class="main-container flex flex-col gap-6 px-3 mt-20 md:px-7 mx-auto">
+
+            <section class="card bg-gray-200 p-4 rounded-md" id="home">
+                <!-- Home(Hero Section) section with a welcome message and a brief introduction -->
+                <h2 class="text-xl font-bold">Welcome to My Website</h2>
+                <p>This is the home section of my personal website.</p>
+            </section>
+
+            <section class="card bg-gray-300 p-4 rounded-md" id="about">
+                <!-- About section with information about me -->
+                <h2 class="text-xl font-bold">About Me</h2>
+                <p>This section contains information about me.</p>
+            </section>
+
+            <section class="card bg-gray-400 p-4 rounded-md" id="portfolio">
+                <!-- Portfolio section showcasing my Projects -->
+                <h2 class="text-xl font-bold">My Portfolio</h2>
+
+                <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Project cards render here via JS -->
+                </div>
+            </section>
+
+            <section class="card flex flex-col bg-gray-500 p-4 rounded-md" id="contact">
+                <!-- Contact section with a form for users to get in touch -->
+                <h2 class="text-xl font-bold mx-auto">Contact Me</h2>
+                
+                <form class="space-y-4 flex flex-col" id="contact-form" name="contact" method="post" netlify>
+                    <label for="name">Name:</label>
+                    <input class="border-gray-700 border-2 bg-gray-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" id="name" name="name" required>
+                    <label for="email">Email:</label>
+                    <input class="border-gray-700 border-2 bg-gray-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" type="email" id="email" name="email" required>
+                    <label for="message">Message:</label>
+                    <textarea class="border-gray-700 border-2 bg-gray-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" id="message" name="message" required></textarea>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send</button>
+                </form>
+                
+            </section>
+
+        </main>
+
+        <footer class="flex justify-center footer p-3 my-4 bg-slate-900 text-white">
+            <!-- Footer section with page navigation and links to social media profiles -->
+            <p class="mt-2">
+                <a href="#home">Home</a> | <a href="#about">About</a> | <a href="#portfolio">Portfolio</a> | <a href="#contact">Contact</a>
+            </p>
+            <p class="mt-2">
+                <a href="https://www.github.com">icon-GitHub</a> | <a href="https://www.twitter.com">icon-Twitter</a> | <a href="https://www.linkedin.com">icon-LinkedIn</a>
+            </p>
+        </footer>
+        <script type="module" src="/src/script.js"></script>
+    </body>
+</html>
