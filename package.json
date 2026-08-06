@@ -1,0 +1,27 @@
+{
+  "name": "vanilla-tailwind-portfolio-starter",
+  "version": "1.0.0",
+  "description": "A starter template with Tailwind CSS, Alpine, Lucide, Vitest, and Playwright.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "alpinejs": "^3.14.0",
+    "lucide": "^0.470.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@tailwindcss/cli": "^4.0.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "jsdom": "^26.0.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.0"
+  }
+}
