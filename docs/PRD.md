@@ -227,7 +227,7 @@ class="bg-gradient-to-r from-slate-900 to-slate-700"
 - After 2 seconds: Icon reverts to original
 - Fallback: If clipboard API unavailable, show alert
 
-### 8.2 Print-Friendly Resume / Resume Generation
+### 8.2 Print-Friendly Resume
 - Subtle "Print Resume" button in footer or About section
 - Clicking triggers `window.print()`
 - Print stylesheet (`@media print`) hides nav, hero, skills, footer
@@ -251,174 +251,67 @@ class="bg-gradient-to-r from-slate-900 to-slate-700"
 
 ### 10.1 `src/data/projectsMetadata.js`
 
+Template structure for each project. Create 5 objects (one per project: 03, 04, 06, 07, 08):
+
 ```javascript
 export const projects = [
   {
-    id: '03',
-    title: 'Utility Calculator + BMI',
-    shortDescription: 'A full-featured calculator with custom expression parsing and a built-in BMI calculator in a modal.',
-    fullDescription: 'Handles arithmetic (+, −, ×, ÷) with proper operator precedence using custom string parsing (no eval()). Includes a separate BMI calculation mode accessed via a modal dialog.',
-    technologies: ['JavaScript', 'DOM Manipulation', 'Modal Dialogs', 'Custom Parser'],
-    image: '/assets/images/03-utility-calculator-bmi.svg',
+    id: '03',  // Project folder number
+    title: 'Project Title',
+    shortDescription: '1–2 sentence summary',
+    fullDescription: 'Longer description of features and approach',
+    technologies: ['Technology 1', 'Technology 2', 'Technology 3'],
+    image: '/assets/images/03-project-name.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_3/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_3',
     engineeringNotes: {
-      problem: 'Built a calculator that could handle multi-operation expressions with correct operator precedence without relying on eval() for security and learning reasons.',
-      keyDecision: 'Implemented a custom string parser that evaluates expressions recursively, respecting order of operations. This showcases algorithmic thinking.',
-      challenge: 'Getting operator precedence right (multiplication/division before addition/subtraction) required careful recursion logic.',
-      hindsight: 'A proper lexer/parser library would have been overkill here, but understanding how parsing works at this level is valuable foundational knowledge.'
+      problem: 'What problem did this solve? (1–2 sentences)',
+      keyDecision: 'Key technical choice made and why (1–2 sentences)',
+      challenge: 'What was difficult to implement? (1–2 sentences)',
+      hindsight: 'What would you do differently? (1–2 sentences)'
     },
-    skillsUsed: ['Custom Expression Parser', 'DOM Manipulation', 'Modal Dialogs', 'Event Handling']
-  },
-  {
-    id: '04',
-    title: 'Student Record System',
-    shortDescription: 'Tabbed records manager with live search, editable student data, and automatic report card generation.',
-    fullDescription: 'Add, update, and delete student records inline in a table. Live search filters by name. Automatic calculation of totals and averages. Generate per-student report cards with letter grades and personalized remarks based on performance.',
-    technologies: ['JavaScript', 'Form Validation', 'localStorage', 'Array Methods', 'DOM Manipulation'],
-    image: '/assets/images/04-student-record-system.svg',
-    demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_4/',
-    repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_4',
-    engineeringNotes: {
-      problem: 'Needed to build an editable table that could handle multiple data states (new, edit, saved) with input validation and live filtering, all persisted to localStorage.',
-      keyDecision: 'Used inline edit-in-place for records rather than a modal form — more intuitive for a data-entry tool.',
-      challenge: 'Preventing invalid input (numbers in age/score fields) without blocking legitimate edits required blocking specific key codes (e, E, +, -) on number inputs.',
-      hindsight: 'Input type="number" has built-in restrictions, but I added extra guards for a tighter UX. Balancing permissiveness and validation is hard to get right first try.'
-    },
-    skillsUsed: ['Form Validation', 'localStorage Persistence', 'Array Methods', 'DOM Manipulation', 'Event Delegation']
-  },
-  {
-    id: '06',
-    title: 'Theme Switcher',
-    shortDescription: '6-theme UI switcher (Light, Dark, Fire, Water, Earth, Wind) with persistent user preference.',
-    fullDescription: 'Dynamic theming system with 6 fully-fledged color palettes. Switch themes via toggle button or dropdown. User preference saved to localStorage and restored on page load.',
-    technologies: ['JavaScript', 'CSS Custom Properties', 'localStorage', 'DOM Manipulation'],
-    image: '/assets/images/06-theme-switcher.svg',
-    demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_6/',
-    repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_6',
-    engineeringNotes: {
-      problem: 'Wanted to show that theming isn\'t just light/dark toggle — built 6 cohesive color palettes each with subtle mood and purpose.',
-      keyDecision: 'Stored themes as a JavaScript array of color objects, applying them to CSS custom properties at runtime rather than swapping CSS class names.',
-      challenge: 'Ensuring all 6 themes had enough contrast for accessibility and visual distinction.',
-      hindsight: 'This approach scales well; adding new themes is as simple as adding an object to the array without touching CSS.'
-    },
-    skillsUsed: ['CSS Custom Properties', 'localStorage Persistence', 'DOM Manipulation', 'Object Iteration']
-  },
-  {
-    id: '07',
-    title: 'Quiz App',
-    shortDescription: 'Timed, category-based quiz with HTML/CSS/JavaScript topics, data-driven from a reusable config file.',
-    fullDescription: 'Select a category (HTML, CSS, or JavaScript), answer timed questions with instant feedback, navigate via numbered jump buttons. All questions and feedback live in a separate data file (quizData.js), making the app reusable.',
-    technologies: ['JavaScript', 'ES6 Modules', 'Event Handling', 'Modal Dialogs', 'Form Validation'],
-    image: '/assets/images/07-quiz-app.svg',
-    demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_7/',
-    repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_7',
-    engineeringNotes: {
-      problem: 'Needed a quiz tool where new questions could be added without touching the app logic — a true data-driven design.',
-      keyDecision: 'Separated quiz engine (logic, timing, navigation) from quiz content (questions, answers, feedback). Data lives in quizData.js as an ES6 export.',
-      challenge: 'Handling the countdown timer and auto-submit when time runs out required careful state management.',
-      hindsight: 'This data-driven approach is a real skill — seeing the boundary between engine and content is how you build reusable tools.'
-    },
-    skillsUsed: ['ES6 Modules', 'Event Handling', 'Custom Modal Dialogs', 'Timer/Interval Management', 'Array Iteration']
-  },
-  {
-    id: '08',
-    title: 'Weather App',
-    shortDescription: 'Real-time weather lookup using Open-Meteo API with state machine error handling and °F/°C toggle.',
-    fullDescription: 'Select a location, fetch live weather data, toggle between Celsius and Fahrenheit. Explicit state machine handles Idle → Loading → Success/Error flow with distinct UI per state.',
-    technologies: ['JavaScript', 'Async/Await', 'Fetch API', 'Error Handling', 'State Machine Pattern'],
-    image: '/assets/images/08-weather-app.svg',
-    demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_8/',
-    repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_8',
-    engineeringNotes: {
-      problem: 'Building a real-time app meant handling network delays, timeouts, and partial failures gracefully without leaving the UI stuck in a loading state.',
-      keyDecision: 'Implemented a strict state machine (Idle → Loading → Success/Error) where only valid state transitions are allowed. This makes the UI predictable.',
-      challenge: 'Implementing proper timeout handling (AbortController) so a hung request doesn\'t lock up the interface.',
-      hindsight: 'State machines feel like overkill for simple apps, but they\'re the foundation of robust UIs. Learned that lesson here.'
-    },
-    skillsUsed: ['Async/Await', 'Fetch API', 'AbortController', 'Error Handling', 'State Machine Pattern', 'API Integration']
+    skillsUsed: ['Skill Name', 'Skill Name']  // Must match ids from skillGraphData.js
   }
+  // Repeat for projects 04, 06, 07, 08
 ];
 ```
 
+**Field definitions:**
+- `id`: Project folder number ('03', '04', '06', '07', '08')
+- `technologies`: List of tech used (displayed as badges on card)
+- `skillsUsed`: Must reference skill `id` values from skillGraphData.js for graph linking
+- `engineeringNotes`: Real problem/decision/challenge/hindsight (not marketing copy)
+
+---
+
 ### 10.2 `src/data/skillGraphData.js`
+
+Template structure for each technique. Create 9 objects (one per verified skill):
 
 ```javascript
 export const skills = [
   {
-    id: 'form-validation',
-    name: 'Form Validation',
-    category: 'User Input',
-    icon: '/assets/icons/form-validation.svg',
-    projects: ['04', '07'],
-    description: 'Client-side validation of form inputs before submission.'
-  },
-  {
-    id: 'localstorage',
-    name: 'localStorage Persistence',
-    category: 'Storage',
-    icon: '/assets/icons/localstorage.svg',
-    projects: ['04', '06'],
-    description: 'Saving and retrieving user data in the browser.'
-  },
-  {
-    id: 'custom-parser',
-    name: 'Custom Expression Parser',
-    category: 'Algorithm',
-    icon: '/assets/icons/custom-parser.svg',
-    projects: ['03'],
-    description: 'Parsing and evaluating string expressions with operator precedence.'
-  },
-  {
-    id: 'fetch-api',
-    name: 'API / Fetch',
-    category: 'Networking',
-    icon: '/assets/icons/fetch-api.svg',
-    projects: ['08'],
-    description: 'Making HTTP requests and handling responses asynchronously.'
-  },
-  {
-    id: 'modal-dialogs',
-    name: 'Modal Dialogs',
-    category: 'UI Components',
-    icon: '/assets/icons/modal-dialogs.svg',
-    projects: ['03', '04', '07'],
-    description: 'Native and custom modal/dialog components for focused interactions.'
-  },
-  {
-    id: 'array-methods',
-    name: 'Array Methods (map/filter)',
-    category: 'JavaScript',
-    icon: '/assets/icons/array-methods.svg',
-    projects: ['04'],
-    description: 'Functional array operations for transforming collections.'
-  },
-  {
-    id: 'dom-manipulation',
-    name: 'DOM Manipulation',
-    category: 'JavaScript',
-    icon: '/assets/icons/dom-manipulation.svg',
-    projects: ['03', '04', '06', '07'],
-    description: 'Selecting, creating, and modifying HTML elements dynamically.'
-  },
-  {
-    id: 'async-await',
-    name: 'Async/Await',
-    category: 'JavaScript',
-    icon: '/assets/icons/async-await.svg',
-    projects: ['08'],
-    description: 'Writing asynchronous code that reads like synchronous logic.'
-  },
-  {
-    id: 'event-delegation',
-    name: 'Event Delegation',
-    category: 'Events',
-    icon: '/assets/icons/event-delegation.svg',
-    projects: ['04', '06'],
-    description: 'Efficient event handling via bubbling and delegation to parent elements.'
+    id: 'kebab-case-id',      // Used in skillsUsed array above
+    name: 'Skill Display Name',
+    category: 'Category Name',  // Groups related skills
+    icon: '/assets/icons/skill-name.svg',
+    projects: ['03', '04'],     // Which project IDs use this skill
+    description: 'One-line description of what this skill is.'
   }
+  // Repeat for all 9 verified skills (see Section 9)
 ];
 ```
+
+**Verified skills mapping:**
+1. Form Validation → Projects: 04, 07
+2. localStorage Persistence → Projects: 04, 06
+3. Custom Expression Parser → Project: 03
+4. API / Fetch → Project: 08
+5. Modal Dialogs → Projects: 03, 04, 07
+6. Array Methods (map/filter) → Project: 04
+7. DOM Manipulation → Projects: 03, 04, 06, 07
+8. Async/Await → Project: 08
+9. Event Delegation → Projects: 04, 06
 
 ---
 
