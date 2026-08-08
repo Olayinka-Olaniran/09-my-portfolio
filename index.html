@@ -45,7 +45,7 @@
             <nav id="menu" class="hidden w-full md:flex flex-row md:flex-row items-center md:w-1/2 h-full">
                 <!-- Navigation menu with links to different sections of the website and collapses into a hamburger menu on smaller screens -->
                 <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#home">Home</a>
-                <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#about">About</a>
+                <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#skills">Skills</a>
                 <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#portfolio">Portfolio</a>
                 <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#contact">Contact</a>
             </nav>
@@ -59,10 +59,43 @@
                 <p>This is the home section of my personal website.</p>
             </section>
 
-            <section class="card bg-gray-300 p-4 rounded-md" id="about">
-                <!-- About section with information about me -->
-                <h2 class="text-xl font-bold">About Me</h2>
-                <p>This section contains information about me.</p>
+        <!-- Skills Section -->
+            <section class="card bg-gray-300 p-4 rounded-md" id="skills">
+                <!-- Skills section with information about my skills -->
+                <h2 class="text-xl font-bold">My Skills</h2>
+                <p>This section contains information about my skills.</p>
+                <div class="graph-area grid grid-cols-[15%_70%_15%] w-9.5/10 md:8.5/10">
+
+                    <div class="skill-nodes w-1.5/10 flex flex-col gap-4">
+                        <div class="skill-node bg-gray-400 p-4 rounded-md shadow-md">
+                            <h3 class="text-lg font-bold">Skill 1</h3>
+                            <p class="hidden">Description of Skill 1</p>
+                        </div>
+                        <div class="skill-node bg-gray-400 p-4 rounded-md shadow-md">
+                            <h3 class="text-lg font-bold">Skill 2</h3>
+                            <p class="hidden">Description of Skill 2</p>
+                        </div>
+                        <div class="skill-node bg-gray-400 p-4 rounded-md shadow-md">
+                            <h3 class="text-lg font-bold">Skill 3</h3>
+                            <p class="hidden">Description of Skill 3</p>
+                        </div>
+                    </div>
+
+                    <div class="connections w-7/10">
+                        <svg id="graph-svg" class="w-full h-full">
+                            <line class="hidden" x1="0" y1="50%" x2="100%" y2="50%" stroke="black" stroke-width="2" />
+                            <line x1="50%" y1="0" x2="50%" y2="100%" stroke="black" stroke-width="2" />
+                        </svg>
+                    </div>
+
+                    <div class="projects w-1.5/10 flex flex-col gap-4">
+                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="03">Project 1</h3>
+                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="05">Project 2</h3>
+                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="06">Project 3</h3>
+                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="07">Project 4</h3>
+                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="08">Project 5</h3>
+                    </div>   
+                </div>
             </section>
 
         <!-- Portfolio Section -->
@@ -72,7 +105,6 @@
 
                 <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Project cards render here via JS -->
-
                 </div>
             </section>
 
@@ -97,7 +129,7 @@
         <footer class="flex justify-center footer p-3 my-4 bg-slate-900 text-white">
             <!-- Footer section with page navigation and links to social media profiles -->
             <p class="mt-2">
-                <a href="#home">Home</a> | <a href="#about">About</a> | <a href="#portfolio">Portfolio</a> | <a href="#contact">Contact</a>
+                <a href="#home">Home</a> | <a href="#skills">Skills</a> | <a href="#portfolio">Portfolio</a> | <a href="#contact">Contact</a>
             </p>
             <p class="mt-2">
                 <a href="https://www.github.com">icon-GitHub</a> | <a href="https://www.twitter.com">icon-Twitter</a> | <a href="https://www.linkedin.com">icon-LinkedIn</a>

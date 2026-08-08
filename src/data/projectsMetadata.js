@@ -27,7 +27,7 @@ export const projects = [
     title: 'Student Record System',
     shortDescription: 'Tabbed records manager with live search, editable student data, and automatic report card generation.',
     fullDescription: 'Add, update, and delete student records inline in a table. Live search filters by name. Automatic calculation of totals and averages. Generate per-student report cards with letter grades and personalized remarks based on performance.',
-    technologies: ['JavaScript', 'Form Validation', 'localStorage', 'Array Methods', 'DOM Manipulation'],
+    technologies: ['JavaScript', 'Form Validation', 'Array Methods', 'DOM Manipulation'],
     image: '/assets/images/04-student-record-system.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_4/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_4',
@@ -37,7 +37,7 @@ export const projects = [
       challenge: 'Preventing invalid input (numbers in age/score fields) without blocking legitimate edits required blocking specific key codes (e, E, +, -) on number inputs.',
       hindsight: 'Input type="number" has built-in restrictions, but I added extra guards for a tighter UX. Balancing permissiveness and validation is hard to get right first try.'
     },
-    skillsUsed: ['form-validation', 'localstorage', 'array-methods', 'dom-manipulation', 'event-delegation']
+    skillsUsed: ['form-validation', 'array-methods', 'dom-manipulation', 'event-delegation']
   },
 
   {
@@ -63,7 +63,7 @@ export const projects = [
     title: 'Quiz App',
     shortDescription: 'Timed, category-based quiz with HTML/CSS/JavaScript topics, data-driven from a reusable config file.',
     fullDescription: 'Select a category (HTML, CSS, or JavaScript), answer timed questions with instant feedback, navigate via numbered jump buttons. All questions and feedback live in a separate data file (quizData.js), making the app reusable.',
-    technologies: ['JavaScript', 'ES6 Modules', 'Event Handling', 'Modal Dialogs', 'Form Validation'],
+    technologies: ['JavaScript', 'ES6 Modules', 'Event Handling', 'Modal Dialogs', 'Error Handling'],
     image: '/assets/images/07-quiz-app.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_7/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_7',
@@ -73,7 +73,7 @@ export const projects = [
       challenge: 'Handling the countdown timer and auto-submit when time runs out required careful state management.',
       hindsight: 'This data-driven approach is a real skill — seeing the boundary between engine and content is how you build reusable tools.'
     },
-    skillsUsed: ['form-validation', 'modal-dialogs', 'dom-manipulation']
+    skillsUsed: ['error-handling', 'modal-dialogs', 'dom-manipulation']
   },
 
   {
