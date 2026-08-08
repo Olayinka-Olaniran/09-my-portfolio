@@ -12,6 +12,7 @@ function renderProjects() {
 
   projects.forEach(project => {
     const card = document.createElement('div');
+    card.id = `portfolio-${project.id}`; // matches #portfolio-XX links from the skill graph
     card.className = 'projects-card flex flex-col justify-end bg-slate-800 rounded-lg overflow-hidden border border-slate-700 shadow-lg';
     card.innerHTML = `
       <!-- Toggle View Buttons -->
@@ -48,6 +49,9 @@ function renderProjects() {
           <!-- Tech Badges -->
           <div class="flex gap-2 flex-wrap mb-5">
             ${(project.technologies ?? [])
+              .map(t => `<span class="bg-slate-700 border-slate-900 text-orange-400 px-3 py-1 rounded-full text-xs font-medium">${t}</span>`)
+              .join('')}
+            ${(project.tags ?? [])
               .map(t => `<span class="bg-slate-700 text-orange-300 px-3 py-1 rounded-full text-xs font-medium">${t}</span>`)
               .join('')}
           </div>
@@ -120,6 +124,38 @@ function toggleView(projectId, view, clickedBtn) {
   clickedBtn.classList.remove('bg-slate-700', 'text-slate-300', 'hover:text-orange-500');
 }
 
+function toSvgPoint(svg, clientX, clientY) {
+  const pt = svg.createSVGPoint();
+  pt.x = clientX;
+  pt.y = clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+function getCenterInSvg(svg, el) {
+  const r = el.getBoundingClientRect();
+  return toSvgPoint(svg, r.left + r.width / 2, r.top + r.height / 2);
+}
+
+function drawEdge(svg, fromEl, toEl, id) {
+  const from = getCenterInSvg(svg, fromEl);
+  const to = getCenterInSvg(svg, toEl);
+
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.id = id;
+  line.classList.add('edge');
+  line.setAttribute('stroke', 'black');
+  line.setAttribute('stroke-width', '2');
+  line.setAttribute('marker-end', 'url(#arrowhead)');
+  line.setAttribute('x1', from.x);
+  line.setAttribute('y1', from.y);
+  line.setAttribute('x2', to.x);
+  line.setAttribute('y2', to.y);
+  svg.appendChild(line);
+}
+
+function clearEdges(svg) {
+  svg.querySelectorAll('.edge').forEach(e => e.remove());
+}
 
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
@@ -137,7 +173,22 @@ if (menuToggle && mobileMenu) {
   });
 }
 
+const svg = document.querySelector('#graph-svg'); // your middle 70% column
 
+document.querySelectorAll('.skill-node').forEach(skillEl => {
+  const projectIds = skills[skillEl.dataset.index].projects; // e.g. '["03","04"]'
+
+  skillEl.addEventListener('mouseenter', () => {
+    clearEdges(svg);
+    projectIds.forEach(pid => {
+      const projectEl = document.getElementById(`${pid}`);
+      console.log(pid, projectEl);
+      if (projectEl) drawEdge(svg, skillEl, projectEl, `edge-${pid}`);
+    });
+  });
+
+  skillEl.addEventListener('mouseleave', () => clearEdges(svg));
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Portfolio website loaded');

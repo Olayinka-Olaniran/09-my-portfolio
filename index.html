@@ -53,87 +53,223 @@
 
         <main class="main-container flex flex-col gap-6 px-3 md:px-7 mx-auto">
 
-            <section class="card bg-gray-200 p-4 rounded-md" id="home">
-                <!-- Home(Hero Section) section with a welcome message and a brief introduction -->
-                <h2 class="text-xl font-bold">Welcome to My Website</h2>
-                <p>This is the home section of my personal website.</p>
+            <!-- Home / Hero Section -->
+            <section class="card bg-slate-50 p-6 md:p-10 rounded-md text-center flex flex-col items-center gap-4" id="home">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-1 pb-2 border-b-2 border-orange-500 inline-block">Hi, I'm Olayinka Olaniran</h2>
+                <p class="text-lg text-slate-700 max-w-2xl">Frontend developer building accessible, data-driven interfaces with vanilla JavaScript — no frameworks(for now), just fundamentals done well.</p>
+                <p class="text-slate-600 max-w-2xl">Five featured projects spanning form validation, custom parsing, live API data, persistent state, and interactive UI — each built from scratch to sharpen core JavaScript before layering on tools like Tailwind, React, and TypeScript.</p>
+
+                <div class="flex flex-wrap justify-center gap-4 mt-2">
+                    <a href="#portfolio" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-5 rounded transition-colors">View Portfolio</a>
+                    <a href="#contact" class="border-2 border-slate-900 hover:border-orange-500 hover:text-orange-500 text-slate-900 font-bold py-2 px-5 rounded transition-colors">Get In Touch</a>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-8 mt-4">
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-orange-500">5</p>
+                        <p class="text-sm text-slate-600">Featured Projects</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-orange-500">9</p>
+                        <p class="text-sm text-slate-600">Skills Mapped</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-2xl font-bold text-orange-500">JS </p>
+                        <p class="text-sm text-slate-600">Vanilla JS Foundation</p>
+                    </div>
+                </div>
             </section>
 
         <!-- Skills Section -->
-            <section class="card bg-gray-300 p-4 rounded-md" id="skills">
-                <!-- Skills section with information about my skills -->
-                <h2 class="text-xl font-bold">My Skills</h2>
-                <p>This section contains information about my skills.</p>
-                <div class="graph-area grid grid-cols-[15%_70%_15%] w-9.5/10 md:8.5/10">
+            <section class="card bg-slate-100 p-4 md:p-8 rounded-md" id="skills">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2 pb-2 border-b-2 border-orange-500 inline-block">My Skills</h2>
+                <p class="text-slate-600 mt-2 mb-6 max-w-2xl">The languages and tools I've practiced, and the core techniques behind each project below.</p>
 
-                    <div class="skill-nodes w-1.5/10 flex flex-col gap-4">
-                        <div class="skill-node bg-gray-400 p-4 rounded-md shadow-md">
-                            <h3 class="text-lg font-bold">Skill 1</h3>
-                            <p class="hidden">Description of Skill 1</p>
+                <!-- Languages & tools practiced -->
+                <div class="tech-stack flex flex-col items-center gap-3 mb-8">
+                    <p class="font-semibold text-slate-700 text-sm uppercase tracking-wide">Languages &amp; Tools I Work With</p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <img src="/assets/icons/html5.svg" alt="HTML5" title="HTML5" class="w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm">
+                        <img src="/assets/icons/css3.svg" alt="CSS3" title="CSS3" class="w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm">
+                        <img src="/assets/icons/javascript.svg" alt="JavaScript" title="JavaScript" class="w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm">
+                        <img src="/assets/icons/tailwind.svg" alt="Tailwind CSS" title="Tailwind CSS" class="w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm">
+                        <img src="/assets/icons/react.svg" alt="React" title="React" class="w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm">
+                        <img src="/assets/icons/typescript.svg" alt="TypeScript" title="TypeScript" class="w-10 h-10 md:w-12 md:h-12 rounded-lg shadow-sm">
+                    </div>
+                </div>
+
+                <p class="text-center text-sm sm:text-base text-slate-600 max-w-xl mx-auto mt-6 mb-7 leading-relaxed">
+                    Here's how those tools come together in practice —
+                    <span class="text-orange-500 font-medium">hover a skill</span> to see which projects use it.
+                </p>
+
+                <div class="graph-area grid grid-cols-[30%_40%_30%] md:grid-cols-[15%_70%_15%] w-full">
+
+                    <!-- All 9 verified techniques -->
+                    <div class="skill-nodes flex flex-col gap-2">
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="form-validation" data-index="0">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-form-validation">Form/Data Validation</button>
+                            <div id="desc-form-validation" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Client-side validation of form inputs before submission.</div>
                         </div>
-                        <div class="skill-node bg-gray-400 p-4 rounded-md shadow-md">
-                            <h3 class="text-lg font-bold">Skill 2</h3>
-                            <p class="hidden">Description of Skill 2</p>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="localstorage" data-index="1">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-localstorage">localStorage Persistence</button>
+                            <div id="desc-localstorage" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Saving and retrieving user data in the browser.</div>
                         </div>
-                        <div class="skill-node bg-gray-400 p-4 rounded-md shadow-md">
-                            <h3 class="text-lg font-bold">Skill 3</h3>
-                            <p class="hidden">Description of Skill 3</p>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="custom-parser" data-index="2">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-custom-parser">Custom Expression Parser</button>
+                            <div id="desc-custom-parser" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Parsing and evaluating string expressions with operator precedence.</div>
+                        </div>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="fetch-api" data-index="3">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-fetch-api">API / Fetch</button>
+                            <div id="desc-fetch-api" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Making HTTP requests and handling responses asynchronously.</div>
+                        </div>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="modal-dialogs" data-index="4">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-modal-dialogs">Modal Dialogs</button>
+                            <div id="desc-modal-dialogs" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Native and custom modal/dialog components for focused interactions.</div>
+                        </div>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="array-methods" data-index="5">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-array-methods">Array Methods (map/filter)</button>
+                            <div id="desc-array-methods" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Functional array operations for transforming collections.</div>
+                        </div>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="dom-manipulation" data-index="6">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-dom-manipulation">DOM Manipulation</button>
+                            <div id="desc-dom-manipulation" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Selecting, creating, and modifying HTML elements dynamically.</div>
+                        </div>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="async-await" data-index="7">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-async-await">Async/Await</button>
+                            <div id="desc-async-await" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Writing asynchronous code that reads like synchronous logic.</div>
+                        </div>
+                        <div class="skill-node relative bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3" data-skill-id="event-delegation" data-index="8">
+                            <button type="button" class="skill-toggle w-full text-left font-bold text-xs md:text-sm text-slate-900" aria-expanded="false" aria-controls="desc-event-delegation">Event Delegation</button>
+                            <div id="desc-event-delegation" class="skill-description hidden md:absolute md:left-full md:top-0 md:ml-3 md:w-56 md:z-20 mt-2 md:mt-0 bg-white border border-slate-200 rounded-md p-3 text-xs md:text-sm text-slate-600 shadow-lg">Efficient event handling via bubbling and delegation to parent elements.</div>
                         </div>
                     </div>
 
-                    <div class="connections w-7/10">
-                        <svg id="graph-svg" class="w-full h-full">
-                            <line class="hidden" x1="0" y1="50%" x2="100%" y2="50%" stroke="black" stroke-width="2" />
-                            <line x1="50%" y1="0" x2="50%" y2="100%" stroke="black" stroke-width="2" />
+                    <div class="connections h-full flex justify-center items-center">
+                        <svg id="graph-svg" class=" w-full h-full">
                         </svg>
                     </div>
 
-                    <div class="projects w-1.5/10 flex flex-col gap-4">
-                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="03">Project 1</h3>
-                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="05">Project 2</h3>
-                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="06">Project 3</h3>
-                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="07">Project 4</h3>
-                        <h3 class="project-node text-lg font-bold bg-gray-400 p-4 rounded-md shadow-md" data-project="08">Project 5</h3>
+                    <!-- Matches project ids in projectsMetadata.js; links resolve to id="portfolio-{id}" on the rendered portfolio cards -->
+                    <div class="projects flex flex-col justify-between h-full">
+                        <h3 id="project-03" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-03" class="hover:text-orange-500 transition-colors">Utility Calculator + BMI</a></h3>
+                        <h3 id="project-04" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-04" class="hover:text-orange-500 transition-colors">Student Record System</a></h3>
+                        <h3 id="project-06" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-06" class="hover:text-orange-500 transition-colors">Theme Switcher</a></h3>
+                        <h3 id="project-07" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-07" class="hover:text-orange-500 transition-colors">Quiz App</a></h3>
+                        <h3 id="project-08" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-08" class="hover:text-orange-500 transition-colors">Weather App</a></h3>
                     </div>   
                 </div>
             </section>
 
         <!-- Portfolio Section -->
-            <section class="card bg-gray-400 p-4 rounded-md" id="portfolio">
-                <!-- Portfolio section showcasing my Projects -->
-                <h2 class="text-xl font-bold">My Portfolio</h2>
+            <section class="card bg-slate-50 p-4 md:p-8 rounded-md" id="portfolio">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-6 pb-2 border-b-2 border-orange-500 inline-block">My Portfolio</h2>
 
+                <!-- Project cards render here via JS from projectsMetadata.js. Give each card id="portfolio-{project.id}" (e.g. id="portfolio-03") so the skill-graph links above resolve. -->
                 <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Project cards render here via JS -->
                 </div>
-            </section>
 
-            <section class="card flex flex-col bg-gray-500 p-4 rounded-md" id="contact">
-                <!-- Contact section with a form for users to get in touch -->
-                <h2 class="text-xl font-bold mx-auto">Contact Me</h2>
-                
-                <form class="space-y-4 flex flex-col" id="contact-form" name="contact" method="post" netlify>
-                    <label for="name">Name:</label>
-                    <input class="border-gray-700 border-2 bg-gray-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" id="name" name="name" required>
-                    <label for="email">Email:</label>
-                    <input class="border-gray-700 border-2 bg-gray-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" type="email" id="email" name="email" required>
-                    <label for="message">Message:</label>
-                    <textarea class="border-gray-700 border-2 bg-gray-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500" id="message" name="message" required></textarea>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Send</button>
-                </form>
-                
             </section>
+       <!-- Contact Section -->
+            <section class="card bg-slate-100 p-4 md:p-8 rounded-md" id="contact">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-6 pb-2 border-b-2 border-orange-500 table mx-auto">Contact Me</h2>
 
+                <div class="flex flex-col md:flex-row items-stretch justify-center max-w-4xl mx-auto">
+
+                    <!-- Form -->
+                    <form class="flex-1 w-full max-w-md mx-auto md:mx-0 flex flex-col gap-4 bg-white border border-slate-300 rounded-t-lg md:rounded-l-lg md:rounded-tr-none shadow-xl p-6" id="contact-form" name="contact" method="post" data-netlify="true" data-netlify-honeypot="bot-field" netlify>
+                        <input type="hidden" name="form-name" value="contact">
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                        </p>
+
+                        <label for="name" class="text-sm font-medium text-slate-700">Name:</label>
+                        <input class="border-slate-700 border-2 bg-slate-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500" type="text" id="name" name="name" required>
+
+                        <label for="email" class="text-sm font-medium text-slate-700">Email:</label>
+                        <input class="border-slate-700 border-2 bg-slate-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500" type="email" id="email" name="email" required>
+
+                        <label for="message" class="text-sm font-medium text-slate-700">Message:</label>
+                        <textarea class="border-slate-700 border-2 bg-slate-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500" id="message" name="message" rows="4" required></textarea>
+
+                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">Send</button>
+                    </form>
+
+                   <div class="hidden md:flex flex-1 max-w-sm flex-col justify-between bg-gradient-to-br from-slate-900 to-slate-800 rounded-r-lg border border-slate-300 shadow-inner p-6 relative overflow-hidden">
+
+    <!-- decorative blobs -->
+    <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/20 rounded-full blur-2xl"></div>
+    <div class="absolute -left-10 bottom-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl"></div>
+
+    <!-- subtle dot grid pattern -->
+    <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 16px 16px;"></div>
+
+    <!-- top: intro -->
+    <div class="relative z-10">
+        <h3 class="text-white font-bold text-lg mb-2">Let's build something great</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">
+            Whether it's a project, an opportunity, or just a question — I usually reply within a day.
+        </p>
+    </div>
+
+    <!-- middle: stat block (fills the dead space) -->
+    <div class="relative z-10 grid grid-cols-3 gap-2 border-y border-white/10 py-5 my-6">
+        <div class="text-center">
+            <p class="text-orange-500 font-bold text-xl">5+</p>
+            <p class="text-slate-400 text-[11px] leading-tight mt-1">Built<br>Projects</p>
+        </div>
+        <div class="text-center">
+            <p class="text-orange-500 font-bold text-xl">9+</p>
+            <p class="text-slate-400 text-[11px] leading-tight mt-1">Core<br>Techniques</p>
+        </div>
+        <div class="text-center">
+            <p class="text-orange-500 font-bold text-xl">&lt;24h</p>
+            <p class="text-slate-400 text-[11px] leading-tight mt-1">Avg. Reply<br>Time</p>
+        </div>
+    </div>
+
+    <!-- bottom: contact links -->
+    <div class="relative z-10 flex flex-col gap-3">
+        <a href="mailto:youremail@example.com" rel="noopener noreferrer" aria-label="Gmail" class="flex items-center gap-2 text-sm text-slate-200 hover:text-orange-400 transition-colors">
+            <img src="/assets/icons/mail.svg" class="w-5 h-5 invert" alt="Gmail">
+            oolaniran853@gmail.com
+            <button><img src="/assets/icons/copy.svg" title="Copy Email" class="w-5 h-5 hover:cursor-pointer invert" alt="copy email"></button>
+        </a>
+                <a href="https://www.github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="flex items-center gap-2 text-sm text-slate-200 hover:text-orange-500 transition-colors">
+                    <img src="/assets/icons/github.svg" alt="GitHub" class="w-5 h-5 invert">
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="flex items-center gap-2 text-sm text-slate-200 hover:text-orange-500 transition-colors">
+                    <img src="/assets/icons/linkedin.svg" alt="LinkedIn" class="w-5 h-5 invert">
+                    LinkedIn
+                </a>
+    </div>
+</div>
+            </section>
         </main>
 
-        <footer class="flex justify-center footer p-3 my-4 bg-slate-900 text-white">
-            <!-- Footer section with page navigation and links to social media profiles -->
-            <p class="mt-2">
-                <a href="#home">Home</a> | <a href="#skills">Skills</a> | <a href="#portfolio">Portfolio</a> | <a href="#contact">Contact</a>
+        <footer class="flex flex-col items-center gap-3 footer p-6 mt-4 bg-slate-900 text-white">
+            <!-- Footer section with page navigation, social links, and copyright -->
+            <p>
+                <a class="hover:text-orange-500 transition-colors" href="#home">Home</a> |
+                <a class="hover:text-orange-500 transition-colors" href="#skills">Skills</a> |
+                <a class="hover:text-orange-500 transition-colors" href="#portfolio">Portfolio</a> |
+                <a class="hover:text-orange-500 transition-colors" href="#contact">Contact</a>
             </p>
-            <p class="mt-2">
-                <a href="https://www.github.com">icon-GitHub</a> | <a href="https://www.twitter.com">icon-Twitter</a> | <a href="https://www.linkedin.com">icon-LinkedIn</a>
-            </p>
+
+            <div class="flex flex-row gap-4">
+                <a href="https://www.github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-orange-500 transition-colors">
+                    <img src="/assets/icons/github.svg" alt="GitHub" class="w-5 h-5 invert">
+                </a>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-orange-500 transition-colors">
+                    <img src="/assets/icons/linkedin.svg" alt="LinkedIn" class="w-5 h-5 invert">
+                </a>
+                <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="hover:text-orange-500 transition-colors">
+                    <img src="/assets/icons/twitter.svg" alt="Twitter" class="w-5 h-5 invert">
+                </a>
+            </div>
+
+            <p class="text-sm text-slate-300">&copy; 2026 Olayinka Olaniran. All rights reserved.</p>
         </footer>
         <script type="module" src="/src/script.js"></script>
     </body>

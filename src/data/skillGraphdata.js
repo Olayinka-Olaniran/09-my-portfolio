@@ -9,7 +9,7 @@ export const skills = [
     name: 'Form Validation',
     category: 'User Input',
     icon: '/assets/icons/form-validation.svg',
-    projects: ['04', '07'],
+    projects: ['project-04', 'project-07'],
     description: 'Client-side validation of form inputs before submission.'
   },
 
@@ -18,7 +18,7 @@ export const skills = [
     name: 'localStorage Persistence',
     category: 'Storage',
     icon: '/assets/icons/localstorage.svg',
-    projects: ['04', '06'],
+    projects: ['project-07', 'project-06'],
     description: 'Saving and retrieving user data in the browser.'
   },
 
@@ -27,7 +27,7 @@ export const skills = [
     name: 'Custom Expression Parser',
     category: 'Algorithm',
     icon: '/assets/icons/custom-parser.svg',
-    projects: ['03'],
+    projects: ['project-03'],
     description: 'Parsing and evaluating string expressions with operator precedence.'
   },
 
@@ -36,7 +36,7 @@ export const skills = [
     name: 'API / Fetch',
     category: 'Networking',
     icon: '/assets/icons/fetch-api.svg',
-    projects: ['08'],
+    projects: ['project-08'],
     description: 'Making HTTP requests and handling responses asynchronously.'
   },
 
@@ -45,7 +45,7 @@ export const skills = [
     name: 'Modal Dialogs',
     category: 'UI Components',
     icon: '/assets/icons/modal-dialogs.svg',
-    projects: ['03', '04', '07'],
+    projects: ['project-03', 'project-04', 'project-07'],
     description: 'Native and custom modal/dialog components for focused interactions.'
   },
 
@@ -54,7 +54,7 @@ export const skills = [
     name: 'Array Methods (map/filter)',
     category: 'JavaScript',
     icon: '/assets/icons/array-methods.svg',
-    projects: ['04'],
+    projects: ['project-04'],
     description: 'Functional array operations for transforming collections.'
   },
 
@@ -63,7 +63,7 @@ export const skills = [
     name: 'DOM Manipulation',
     category: 'JavaScript',
     icon: '/assets/icons/dom-manipulation.svg',
-    projects: ['03', '04', '06', '07'],
+    projects: ['project-03', 'project-04', 'project-06', 'project-07'],
     description: 'Selecting, creating, and modifying HTML elements dynamically.'
   },
 
@@ -72,7 +72,7 @@ export const skills = [
     name: 'Async/Await',
     category: 'JavaScript',
     icon: '/assets/icons/async-await.svg',
-    projects: ['08'],
+    projects: ['project-08'],
     description: 'Writing asynchronous code that reads like synchronous logic.'
   },
 
@@ -81,7 +81,7 @@ export const skills = [
     name: 'Event Delegation',
     category: 'Events',
     icon: '/assets/icons/event-delegation.svg',
-    projects: ['04', '06'],
+    projects: ['project-04', 'project-06'],
     description: 'Efficient event handling via bubbling and delegation to parent elements.'
   }
 ];
