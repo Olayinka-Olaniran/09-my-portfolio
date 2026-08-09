@@ -157,6 +157,24 @@ function clearEdges(svg) {
   svg.querySelectorAll('.edge').forEach(e => e.remove());
 }
 
+function setNodesFaded(activeSkillEl, projectIds) {
+  document.querySelectorAll('.skill-node').forEach(el => {
+    el.style.opacity = el === activeSkillEl ? '1' : '0.3';
+    el.style.transition = 'opacity 150ms ease';
+  });
+  document.querySelectorAll('.project-node').forEach(el => {
+    const isActive = projectIds.includes(el.id);
+    el.style.opacity = isActive ? '1' : '0.3';
+    el.style.transition = 'opacity 150ms ease';
+  });
+}
+
+function resetNodeOpacity() {
+  document.querySelectorAll('.skill-node, .project-node').forEach(el => {
+    el.style.opacity = '1';
+  });
+}
+
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
@@ -173,13 +191,14 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-const svg = document.querySelector('#graph-svg'); // your middle 70% column
+const svg = document.querySelector('#graph-svg'); // your middle 70%/40% column
 
 document.querySelectorAll('.skill-node').forEach(skillEl => {
   const projectIds = skills[skillEl.dataset.index].projects; // e.g. '["03","04"]'
 
   skillEl.addEventListener('mouseenter', () => {
     clearEdges(svg);
+    setNodesFaded(skillEl, projectIds);
     projectIds.forEach(pid => {
       const projectEl = document.getElementById(`${pid}`);
       console.log(pid, projectEl);
@@ -187,7 +206,10 @@ document.querySelectorAll('.skill-node').forEach(skillEl => {
     });
   });
 
-  skillEl.addEventListener('mouseleave', () => clearEdges(svg));
+  skillEl.addEventListener('mouseleave', () => {
+    clearEdges(svg);
+    resetNodeOpacity();
+  });
 });
 
 document.addEventListener('DOMContentLoaded', () => {

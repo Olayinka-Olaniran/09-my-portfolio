@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="800" height="560" fill="#ffffff"/>
+  <text x="20" y="30" font-size="14" fill="#333333" font-weight="bold">Skills section — 3 column graph (9 skills to 5 projects)</text>
+
+  <rect x="20" y="45" width="760" height="500" fill="#f9f9f9" stroke="#999999" stroke-width="1.5"/>
+
+  <g font-size="10" fill="#666666">
+    <rect x="45" y="65" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="86">Form validation</text>
+    <rect x="45" y="107" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="128">localStorage</text>
+    <rect x="45" y="149" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="170">Custom parser</text>
+    <rect x="45" y="191" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="212">Fetch API</text>
+    <rect x="45" y="233" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="254">Modal dialogs</text>
+    <rect x="45" y="275" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="296">Array methods</text>
+    <rect x="45" y="317" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="338">DOM manipulation</text>
+    <rect x="45" y="359" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="380">Async / await</text>
+    <rect x="45" y="401" width="180" height="34" fill="#ffffff" stroke="#999999"/>
+    <text x="55" y="422">Event delegation</text>
+  </g>
+
+  <rect x="255" y="65" width="290" height="370" fill="none" stroke="#cccccc" stroke-dasharray="4,4"/>
+  <text x="400" y="255" font-size="10" fill="#aaaaaa" text-anchor="middle">SVG edge layer</text>
+  <text x="400" y="270" font-size="10" fill="#aaaaaa" text-anchor="middle">lines drawn on hover / tap</text>
+  <line x1="270" y1="82" x2="530" y2="150" stroke="#bbbbbb" stroke-width="1"/>
+  <line x1="270" y1="124" x2="530" y2="230" stroke="#bbbbbb" stroke-width="1"/>
+  <line x1="270" y1="166" x2="530" y2="90" stroke="#bbbbbb" stroke-width="1"/>
+
+  <g font-size="10" fill="#666666">
+    <rect x="575" y="70" width="170" height="60" fill="#ffffff" stroke="#999999"/>
+    <text x="660" y="104" text-anchor="middle">Utility calculator</text>
+    <rect x="575" y="150" width="170" height="60" fill="#ffffff" stroke="#999999"/>
+    <text x="660" y="184" text-anchor="middle">Student records</text>
+    <rect x="575" y="230" width="170" height="60" fill="#ffffff" stroke="#999999"/>
+    <text x="660" y="264" text-anchor="middle">Theme switcher</text>
+    <rect x="575" y="310" width="170" height="60" fill="#ffffff" stroke="#999999"/>
+    <text x="660" y="344" text-anchor="middle">Quiz app</text>
+    <rect x="575" y="390" width="170" height="60" fill="#ffffff" stroke="#999999"/>
+    <text x="660" y="424" text-anchor="middle">Weather app</text>
+  </g>
+
+  <text x="45" y="470" font-size="9" fill="#999999">Desktop: hover a skill fades non-connected nodes, draws edges.</text>
+  <text x="45" y="486" font-size="9" fill="#999999">Mobile: tap toggles same state (see follow-up note in chat summary).</text>
+  <text x="45" y="502" font-size="9" fill="#999999">Click-to-scroll and project-to-skill highlight are not yet built.</text>
+</svg>

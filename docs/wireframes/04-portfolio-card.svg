@@ -1,0 +1,36 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="800" height="400" fill="#ffffff"/>
+  <text x="20" y="30" font-size="14" fill="#333333" font-weight="bold">Project card — default view / engineering notes view</text>
+
+  <rect x="30" y="45" width="350" height="330" fill="#f9f9f9" stroke="#999999" stroke-width="1.5"/>
+  <rect x="30" y="45" width="350" height="30" fill="#eeeeee" stroke="#999999"/>
+  <rect x="325" y="52" width="18" height="16" fill="#dddddd" stroke="#999999"/>
+  <rect x="348" y="52" width="18" height="16" fill="#dddddd" stroke="#999999"/>
+  <rect x="30" y="75" width="350" height="120" fill="#e0e0e0"/>
+  <line x1="30" y1="75" x2="380" y2="195" stroke="#bbbbbb"/>
+  <line x1="380" y1="75" x2="30" y2="195" stroke="#bbbbbb"/>
+  <rect x="45" y="210" width="200" height="14" fill="#e8e8e8"/>
+  <rect x="45" y="232" width="300" height="10" fill="#efefef"/>
+  <rect x="45" y="246" width="220" height="10" fill="#efefef"/>
+  <rect x="45" y="265" width="60" height="18" fill="#dddddd" rx="9"/>
+  <rect x="112" y="265" width="60" height="18" fill="#dddddd" rx="9"/>
+  <rect x="45" y="300" width="160" height="34" fill="#dddddd" stroke="#999999"/>
+  <text x="125" y="321" font-size="10" fill="#666666" text-anchor="middle">Demo</text>
+  <rect x="215" y="300" width="160" height="34" fill="#dddddd" stroke="#999999"/>
+  <text x="295" y="321" font-size="10" fill="#666666" text-anchor="middle">GitHub</text>
+  <text x="205" y="362" font-size="9" fill="#999999" text-anchor="middle">default view</text>
+
+  <rect x="420" y="45" width="350" height="330" fill="#f9f9f9" stroke="#999999" stroke-width="1.5"/>
+  <rect x="420" y="45" width="350" height="30" fill="#eeeeee" stroke="#999999"/>
+  <rect x="715" y="52" width="18" height="16" fill="#dddddd" stroke="#999999"/>
+  <rect x="738" y="52" width="18" height="16" fill="#dddddd" stroke="#999999"/>
+  <text x="435" y="95" font-size="10" fill="#888888" font-weight="bold">Problem</text>
+  <rect x="435" y="102" width="320" height="10" fill="#efefef"/>
+  <text x="435" y="132" font-size="10" fill="#888888" font-weight="bold">Key decision</text>
+  <rect x="435" y="139" width="320" height="10" fill="#efefef"/>
+  <text x="435" y="169" font-size="10" fill="#888888" font-weight="bold">Challenge</text>
+  <rect x="435" y="176" width="280" height="10" fill="#efefef"/>
+  <text x="435" y="206" font-size="10" fill="#888888" font-weight="bold">Hindsight</text>
+  <rect x="435" y="213" width="300" height="10" fill="#efefef"/>
+  <text x="595" y="362" font-size="9" fill="#999999" text-anchor="middle">engineering notes view (image collapsed)</text>
+</svg>

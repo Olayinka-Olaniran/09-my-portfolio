@@ -1,0 +1,35 @@
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <rect width="800" height="420" fill="#ffffff"/>
+  <text x="20" y="30" font-size="14" fill="#333333" font-weight="bold">Hero / Home (combined Hero + About)</text>
+
+  <rect x="20" y="45" width="760" height="360" fill="#f9f9f9" stroke="#999999" stroke-width="1.5"/>
+
+  <rect x="220" y="80" width="360" height="20" fill="#e0e0e0"/>
+  <text x="400" y="95" font-size="10" fill="#999999" text-anchor="middle">H2 — greeting headline</text>
+
+  <rect x="180" y="115" width="440" height="12" fill="#e8e8e8"/>
+  <rect x="220" y="133" width="360" height="12" fill="#e8e8e8"/>
+  <text x="400" y="160" font-size="9" fill="#999999" text-anchor="middle">intro paragraph, 2 lines</text>
+
+  <rect x="140" y="175" width="530" height="12" fill="#e8e8e8"/>
+  <rect x="180" y="193" width="450" height="12" fill="#e8e8e8"/>
+  <text x="400" y="220" font-size="9" fill="#999999" text-anchor="middle">secondary paragraph, 2 lines</text>
+
+  <rect x="270" y="245" width="120" height="36" fill="#dddddd" stroke="#999999"/>
+  <text x="330" y="267" font-size="11" fill="#666666" text-anchor="middle">View portfolio</text>
+  <rect x="410" y="245" width="120" height="36" fill="#ffffff" stroke="#999999"/>
+  <text x="470" y="267" font-size="11" fill="#666666" text-anchor="middle">Get in touch</text>
+
+  <line x1="250" y1="310" x2="250" y2="360" stroke="#cccccc"/>
+  <line x1="400" y1="310" x2="400" y2="360" stroke="#cccccc"/>
+  <line x1="550" y1="310" x2="550" y2="360" stroke="#cccccc"/>
+
+  <text x="250" y="335" font-size="16" fill="#333333" text-anchor="middle" font-weight="bold">5</text>
+  <text x="250" y="352" font-size="9" fill="#999999" text-anchor="middle">projects</text>
+
+  <text x="400" y="335" font-size="16" fill="#333333" text-anchor="middle" font-weight="bold">9</text>
+  <text x="400" y="352" font-size="9" fill="#999999" text-anchor="middle">skills mapped</text>
+
+  <text x="550" y="335" font-size="16" fill="#333333" text-anchor="middle" font-weight="bold">JS</text>
+  <text x="550" y="352" font-size="9" fill="#999999" text-anchor="middle">vanilla foundation</text>
+</svg>

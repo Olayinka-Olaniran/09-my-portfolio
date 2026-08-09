@@ -24,6 +24,31 @@
 │                                                                          │
 └─────────────────────────────────────────────────────────────────────────┘
 
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ SKILLS / TECHNIQUE GRAPH SECTION (light gray bg)                        │
+│                                                                          │
+│                    Techniques & Tools                                   │
+│                                                                          │
+│  ┌────────────────────────────────────────────────────────────────┐   │
+│  │                    [SKILL GRAPH SVG]                            │   │
+│  │                                                                │   │
+│  │   Array Methods ←——→ Project 3, 4, 7                         │   │
+│  │                                                                │   │
+│  │   Form Validation ←——→ Project 4, 7                          │   │
+│  │                                                                │   │
+│  │   State Persistence ←——→ Project 6, 7                        │   │
+│  │                                                                │   │
+│  │   Async/Fetch ←——→ Project 8                                 │   │
+│  │                                                                │   │
+│  │   [hover technique highlights projects]                       │   │
+│  │   [click project scrolls to card]                             │   │
+│  │                                                                │   │
+│  └────────────────────────────────────────────────────────────────┘   │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ PORTFOLIO SECTION (white bg)                                             │
 │                                                                          │
@@ -56,44 +81,6 @@
 │  │ [Demo] [GitHub]  │  │ [Demo] [GitHub]  │                            │
 │  │ [Details]        │  │ [Details]        │                            │
 │  └──────────────────┘  └──────────────────┘                            │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────────┐
-│ SKILLS / TECHNIQUE GRAPH SECTION (light gray bg)                        │
-│                                                                          │
-│                    Techniques & Tools                                   │
-│                                                                          │
-│  ┌────────────────────────────────────────────────────────────────┐   │
-│  │                    [SKILL GRAPH SVG]                            │   │
-│  │                                                                │   │
-│  │   Array Methods ←——→ Project 3, 4, 7                         │   │
-│  │                                                                │   │
-│  │   Form Validation ←——→ Project 4, 7                          │   │
-│  │                                                                │   │
-│  │   State Persistence ←——→ Project 6, 7                        │   │
-│  │                                                                │   │
-│  │   Async/Fetch ←——→ Project 8                                 │   │
-│  │                                                                │   │
-│  │   [hover technique highlights projects]                       │   │
-│  │   [click project scrolls to card]                             │   │
-│  │                                                                │   │
-│  └────────────────────────────────────────────────────────────────┘   │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────────┐
-│ ABOUT SECTION (white bg)                                                 │
-│                                                                          │
-│                          About Me                                       │
-│                                                                          │
-│  I'm a frontend developer focused on building clean, responsive,       │
-│  and accessible web applications. This portfolio showcases real         │
-│  projects that demonstrate my progress from basic DOM manipulation      │
-│  to async API integration and data-driven UI design.                    │
-│                                                                          │
-│  Each project represents a learning milestone and an honest             │
-│  reflection of my problem-solving approach.                            │
 │                                                                          │
 └─────────────────────────────────────────────────────────────────────────┘
 
@@ -155,7 +142,20 @@
 │                             │
 │  [Explore My Work]          │
 │                             │
-│  email@email.com  📋        │
+│  email@email.com 📋         │
+│                             │
+└─────────────────────────────┘
+
+┌─────────────────────────────┐
+│ SKILLS SECTION              │
+│                             │
+│  Techniques & Tools         │
+│                             │
+│ ┌─────────────────────────┐ │
+│ │   [SKILL GRAPH]         │ │
+│ │   (vertical layout      │ │
+│ │    or simplified)       │ │
+│ └─────────────────────────┘ │
 │                             │
 └─────────────────────────────┘
 
@@ -191,29 +191,6 @@
 │                             │
 └─────────────────────────────┘
 
-┌─────────────────────────────┐
-│ SKILLS SECTION              │
-│                             │
-│  Techniques & Tools         │
-│                             │
-│ ┌─────────────────────────┐ │
-│ │   [SKILL GRAPH]         │ │
-│ │   (vertical layout      │ │
-│ │    or simplified)       │ │
-│ └─────────────────────────┘ │
-│                             │
-└─────────────────────────────┘
-
-┌─────────────────────────────┐
-│ ABOUT SECTION               │
-│                             │
-│    About Me                 │
-│                             │
-│  I'm a frontend developer...│
-│                             │
-│  Each project represents... │
-│                             │
-└─────────────────────────────┘
 
 ┌─────────────────────────────┐
 │ CONTACT SECTION (dark)      │
@@ -254,7 +231,9 @@
 │                                │
 ├────────────────────────────────┤
 │                                │
-│ Utility Calculator + BMI       │ ← Title
+│                    <>  <>      |
+|                                |
+|Utility Calculator + BMI       │ ← Title
 │                                │
 │ Multi-function calculator...   │ ← Short description (1-2 lines max)
 │                                │
@@ -264,7 +243,7 @@
 │ │ View Demo  │  │  GitHub   │ │ ← Action buttons
 │ └────────────┘  └───────────┘ │
 │                                │
-│          [Details]             │ ← Toggle button
+│                                │ ← Toggle button
 │                                │
 └────────────────────────────────┘
 ```
@@ -273,10 +252,8 @@
 ```
 ┌────────────────────────────────┐
 │                                │
-│     [Project Image SVG]        │
 │                                │
-├────────────────────────────────┤
-│                                │
+│                    <>  <>      |
 │ Problem:                       │
 │ Build a calculator that        │
 │ handles multi-operation...     │
@@ -293,7 +270,7 @@
 │ Understanding how parsing      │
 │ works is valuable...           │
 │                                │
-│          [Back]                │ ← Toggle button
+│                                │ ← Toggle button
 │                                │
 └────────────────────────────────┘
 ```
