@@ -33,7 +33,7 @@ function renderProjects() {
       </div>
 
       <!-- Project Image (hidden when engineering notes are shown) -->
-      <div class="project-image-${project.id} relative w-full bg-slate-700 flex flex-1 items-center justify-center border-b border-slate-700 flex-shrink-0">
+      <div class="project-image-${project.id} relative w-full bg-slate-700 flex flex-1 items-center justify-center border-b border-slate-700 shrink-0">
         ${project.image
           ? `<img src="${project.image}" alt="${project.title}" class=" object-contain w-auto h-auto">`
           : 'Project Image'}
@@ -153,25 +153,123 @@ function drawEdge(svg, fromEl, toEl, id) {
   svg.appendChild(line);
 }
 
+
+const svg = document.querySelector('#graph-svg'); // your middle 70%/40% column
+const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+// ---- Accordion toggle (works on all breakpoints/devices) ----
+document.querySelectorAll('.skill-toggle').forEach(btn => {
+  const descEl = document.getElementById(btn.getAttribute('aria-controls'));
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+    // close every other open description first
+    document.querySelectorAll('.skill-toggle[aria-expanded="true"]').forEach(otherBtn => {
+      if (otherBtn === btn) return;
+      otherBtn.setAttribute('aria-expanded', 'false');
+      const otherDesc = document.getElementById(otherBtn.getAttribute('aria-controls'));
+      if (otherDesc) otherDesc.classList.add('hidden');
+    });
+
+    // then toggle this one based on its own prior state
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    if (descEl) descEl.classList.toggle('hidden', isOpen);
+  });
+});
+
+// ---- Graph drawing / fading ----
+function fadeNodes({ activeSkillEls = [], activeProjectIds = [] } = {}) {
+  document.querySelectorAll('.skill-node').forEach(el => {
+    el.style.transition = 'opacity 150ms ease';
+    el.style.opacity = activeSkillEls.includes(el) ? '1' : '0.3';
+  });
+  document.querySelectorAll('.project-node').forEach(el => {
+    el.style.transition = 'opacity 150ms ease';
+    el.style.opacity = activeProjectIds.includes(el.id) ? '1' : '0.3';
+  });
+}
+
+function resetGraph() {
+  clearEdges(svg);
+  document.querySelectorAll('.skill-node, .project-node').forEach(el => {
+    el.style.opacity = '1';
+  });
+}
+
+function showSkillGraph(skillEl, projectIds) {
+  clearEdges(svg);
+  fadeNodes({ activeSkillEls: [skillEl], activeProjectIds: projectIds });
+  projectIds.forEach(pid => {
+    const projectEl = document.getElementById(pid);
+    if (projectEl) drawEdge(svg, skillEl, projectEl, `edge-${pid}`);
+  });
+}
+
+function getSkillIndicesForProject(projectId) {
+  return skills
+    .map((skill, idx) => ({ skill, idx }))
+    .filter(({ skill }) => skill.projects.includes(projectId))
+    .map(({ idx }) => idx);
+}
+
+function showProjectGraph(projectEl, skillIndices) {
+  clearEdges(svg);
+  const skillEls = skillIndices
+    .map(i => document.querySelector(`.skill-node[data-index="${i}"]`))
+    .filter(Boolean);
+  fadeNodes({ activeSkillEls: skillEls, activeProjectIds: [projectEl.id] });
+  skillEls.forEach((skillEl, n) => drawEdge(svg, skillEl, projectEl, `edge-skill-${n}`));
+}
+
+
 function clearEdges(svg) {
   svg.querySelectorAll('.edge').forEach(e => e.remove());
 }
 
-function setNodesFaded(activeSkillEl, projectIds) {
-  document.querySelectorAll('.skill-node').forEach(el => {
-    el.style.opacity = el === activeSkillEl ? '1' : '0.3';
-    el.style.transition = 'opacity 150ms ease';
-  });
-  document.querySelectorAll('.project-node').forEach(el => {
-    const isActive = projectIds.includes(el.id);
-    el.style.opacity = isActive ? '1' : '0.3';
-    el.style.transition = 'opacity 150ms ease';
-  });
-}
+// ---- Skill nodes: hover (desktop) or tap (mobile) ----
+document.querySelectorAll('.skill-node').forEach(skillEl => {
+  const projectIds = skills[skillEl.dataset.index].projects;
 
-function resetNodeOpacity() {
-  document.querySelectorAll('.skill-node, .project-node').forEach(el => {
-    el.style.opacity = '1';
+  if (supportsHover) {
+    skillEl.addEventListener('mouseenter', () => showSkillGraph(skillEl, projectIds));
+    skillEl.addEventListener('mouseleave', resetGraph);
+  } else {
+    skillEl.addEventListener('click', () => {
+      const wasActive = skillEl.classList.contains('graph-active');
+      document.querySelectorAll('.graph-active').forEach(el => el.classList.remove('graph-active'));
+      resetGraph();
+      if (!wasActive) {
+        skillEl.classList.add('graph-active');
+        showSkillGraph(skillEl, projectIds);
+      }
+    });
+  }
+});
+
+// ---- Project nodes: hover (desktop) or tap (mobile) ----
+document.querySelectorAll('.project-node').forEach(projectEl => {
+  const skillIndices = getSkillIndicesForProject(projectEl.id);
+
+  if (supportsHover) {
+    projectEl.addEventListener('mouseenter', () => showProjectGraph(projectEl, skillIndices));
+    projectEl.addEventListener('mouseleave', resetGraph);
+  } else {
+    projectEl.addEventListener('click', () => {
+      document.querySelectorAll('.graph-active').forEach(el => el.classList.remove('graph-active'));
+      projectEl.classList.add('graph-active');
+      showProjectGraph(projectEl, skillIndices);
+      // native <a href="#portfolio-XX"> still navigates after this runs
+    });
+  }
+});
+
+// ---- Tap outside clears state (mobile only) ----
+if (!supportsHover) {
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.skill-node') && !e.target.closest('.project-node')) {
+      document.querySelectorAll('.graph-active').forEach(el => el.classList.remove('graph-active'));
+      resetGraph();
+    }
   });
 }
 
@@ -191,26 +289,44 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-const svg = document.querySelector('#graph-svg'); // your middle 70%/40% column
+const copyEmailBtn = document.getElementById('copy-email-btn');
+const emailAddress = 'oolaniran853@gmail.com';
 
-document.querySelectorAll('.skill-node').forEach(skillEl => {
-  const projectIds = skills[skillEl.dataset.index].projects; // e.g. '["03","04"]'
-
-  skillEl.addEventListener('mouseenter', () => {
-    clearEdges(svg);
-    setNodesFaded(skillEl, projectIds);
-    projectIds.forEach(pid => {
-      const projectEl = document.getElementById(`${pid}`);
-      console.log(pid, projectEl);
-      if (projectEl) drawEdge(svg, skillEl, projectEl, `edge-${pid}`);
-    });
+if (copyEmailBtn) {
+  copyEmailBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(emailAddress);
+      showCopyFeedback(copyEmailBtn);
+    } catch {
+      // fallback for browsers without Clipboard API or non-secure context
+      const textarea = document.createElement('textarea');
+      textarea.value = emailAddress;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showCopyFeedback(copyEmailBtn);
+      } catch {
+        alert(`Copy failed — email is ${emailAddress}`);
+      }
+      document.body.removeChild(textarea);
+    }
   });
+}
 
-  skillEl.addEventListener('mouseleave', () => {
-    clearEdges(svg);
-    resetNodeOpacity();
-  });
-});
+function showCopyFeedback(btn) {
+  const label = document.createElement('span');
+  label.textContent = 'Copied!';
+  label.className = 'text-xs text-green-400 ml-1';
+  btn.insertAdjacentElement('afterend', label);
+  btn.setAttribute('aria-label', 'Email copied');
+  setTimeout(() => {
+    label.remove();
+    btn.setAttribute('aria-label', 'Copy email address');
+  }, 2000);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Portfolio website loaded');

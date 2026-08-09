@@ -1,488 +1,220 @@
-# Portfolio Website — Product Requirements Document
+# Portfolio Website — Product Requirements Document (v2)
 
-**Project:** Assessment_Project_9 (Final Vanilla JavaScript Project)  
-**Status:** In Development  
-**Last Updated:** 2026-08-06  
+**Project:** Assessment_Project_9 (Final Vanilla JavaScript Project)
+**Status:** In Development — Core structure and rendering built, interactive polish in progress
+**Supersedes:** PRD v1 (2026-08-06)
 **Author:** Olayinka Olaniran
 
 ---
 
 ## 1. Overview
 
-A **professional portfolio website** showcasing 5 verified JavaScript projects with interactive navigation, a skill-mapping visualization, and detailed project insights. This portfolio brings all verified work into one cohesive narrative with a skill graph that explains *which* techniques were used *where*, and project cards that surface real engineering decisions alongside shipping artifacts.
+A portfolio website showcasing 5 verified JavaScript projects, built with vanilla JS, Tailwind CSS, and Vite. The site centers on a skill-to-project mapping graph, toggleable engineering notes on each project card, and a two-panel contact section. No frameworks — this is a deliberate demonstration of core JavaScript before the next project (Assessment_Project_10+) moves to React/TypeScript/Next.js.
 
-**Unique value proposition:** Instead of forcing visitors to jump between GitHub, live demos, and LinkedIn, the portfolio centralizes proof of capability with intentional navigation (command palette), real problem-solving context (engineering notes), and technique mapping (skill graph).
+This version of the PRD reflects the site as actually built, not just as originally planned. Where v1 described something that was later built differently, this document describes the current decision and why it changed.
 
 ---
 
 ## 2. Target Audience
 
-1. **Hiring managers / Tech leads** — Need proof of capability in vanilla JS, async/await, DOM manipulation, form handling, localStorage, and responsive design.
-2. **Code reviewers** — Want to see thoughtful decision-making and problem-solving, not just feature lists (hence "engineering notes" toggle).
-3. **Peers / Mentors** — Looking to give feedback or understand the project-building journey (dev-log visibility in presentation notes).
+1. **Hiring managers / tech leads** — proof of capability in vanilla JS, async/await, DOM manipulation, form handling, localStorage, responsive design.
+2. **Code reviewers** — want to see reasoning, not just feature lists (engineering notes toggle exists for this).
+3. **Peers / mentors** — interested in the build journey.
 
 ---
 
 ## 3. Goals
 
 ### Primary
-- **Demonstrate technical capability** — 5 real, verifiable projects with working live demos and open-source code.
-- **Show problem-solving approach** — "Engineering notes" on each project articulate problem, key decision, challenge faced, and hindsight.
-- **Make navigation intentional** — Command palette (Ctrl+K) turns discovery into a deliberate user action, not passive scrolling.
-- **Map skill → project** — Skill graph shows which techniques are used across which projects, making hiring relevance explicit.
+- Demonstrate technical capability across 5 real projects with live demos and source.
+- Show problem-solving via "engineering notes" (problem, key decision, challenge, hindsight) on each project card.
+- Map skill → project relationships visually via an interactive graph.
+- Keep navigation simple and fast (4 sections, no dead ends).
 
 ### Secondary
-- **Polish and personality** — Small touches (copy-to-clipboard, print-friendly layout, smooth animations) signal attention to detail.
-- **Honest growth narrative** — Commit history progression (sparse early, more thoughtful later) visible in presentation notes.
-- **Accessibility** — Keyboard nav, color contrast, semantic HTML, screen-reader friendly.
+- Small polish touches (copy-to-clipboard email, print-friendly output) — planned, not yet built.
+- Accessibility: keyboard nav, contrast, semantic HTML, screen-reader support.
 
 ### Non-Goals
-- Terminal-style typing intro (overdone, distracting)
-- Live GitHub stats / commit counters (API limits, too much noise)
-- Blog / Medium articles (out of scope)
-- Testimonials section (no references yet)
+- Terminal-style typing intro
+- Live GitHub stats/commit counters
+- Blog/articles
+- Testimonials (no references yet)
+- A separate command palette is still a stated goal (see §7) but is not required for v1 launch — it can ship as a fast-follow.
 
 ---
 
 ## 4. Tech Stack
 
 | Layer | Technology | Rationale |
-|-------|-----------|-----------|
-| **Build** | Vite | Modern, fast dev server; modern standard for static sites |
-| **Styling** | Tailwind CSS | Utility-first, responsive by default, minimal custom CSS |
-| **JavaScript** | Vanilla (ES6+) | No frameworks; showcases core JS mastery |
-| **Hosting** | Netlify | Free custom domain, git-push deploy, native form handling |
-| **Version Control** | Git (Conventional Commits) | Professional commit history |
-
-**No frameworks.** This is a feature, not a limitation — it demonstrates deep JavaScript knowledge.
+|---|---|---|
+| Build | Vite | Fast dev server, standard for static sites |
+| Styling | Tailwind CSS | Utility-first, responsive by default |
+| JavaScript | Vanilla ES6+ (modules) | Demonstrates core JS mastery, no framework |
+| Hosting | Netlify | Free custom domain, git-push deploy, native form handling |
+| Version control | Git, Conventional Commits | Professional history |
 
 ---
 
-## 5. Design System
+## 5. Design System (as built)
 
-### Color Scheme
+**This is a two-tone design, not light-primary-with-dark-accents.** The header, footer, and one half of the contact section are dark slate; Home/Skills/Portfolio sections are light. v1 undersold how much dark surface area the site actually uses — treat the two tones as equal partners, not primary/accent.
 
-**Primary Palette:**
-- **Background**: `#ffffff` (white) or `#f8fafc` (slate-50)
-- **Dark areas**: `#0f172a` (slate-900)
-- **Accent**: `#f97316` (orange-500) — matches existing project card SVG aesthetic
-- **Secondary text**: `#64748b` (slate-500)
-- **Borders**: `#e2e8f0` (slate-200)
+**Palette**
+- Light surfaces: `white`, `slate-50`
+- Dark surfaces: `slate-900`, `slate-800`, `slate-700` (header gradient, footer, contact right panel)
+- Accent: `orange-500` / `orange-400` — links, buttons, active states
+- Secondary text: `slate-600` / `slate-300` (context-dependent on light/dark surface)
+- Borders: `slate-200` / `slate-300` (light), `white/10` (dark)
 
-**Tailwind Classes:**
-```
-bg-white, bg-slate-50, bg-slate-900
-text-slate-900, text-slate-500, text-white
-border-slate-200, border-slate-600
-bg-orange-500, hover:bg-orange-600, text-orange-500
-```
+**Typography**
+- Headings: bold sans-serif, high contrast
+- Body: 16px base
+- Links: orange accent, hover transition
 
-**Gradient (Header):**
-```html
-class="bg-gradient-to-r from-slate-900 to-slate-700"
-```
-
-### Typography
-
-- **Headings (H1–H3):** Sans-serif, bold, high contrast
-- **Body text:** 16px base, 1.5 line-height for readability
-- **Code/monospace:** `font-mono` for technical snippets
-- **Links:** Orange accent (`text-orange-500`) with underline on hover
-
-### Spacing & Layout
-
-- **Container:** max-width 1280px (lg breakpoint)
-- **Sections:** Vertical rhythm with consistent padding (1.5rem/2rem/3rem)
-- **Grid:** Responsive (1 col mobile, 2 col tablet, 3 col desktop for projects)
+**Layout**
+- Container: responsive, no hard max-width lock observed in current build (verify against final Tailwind config)
+- Grid: 1 col mobile → 2 col tablet → 3 col desktop for project cards
+- Skill graph: 3-column grid (`grid-cols-[30%_40%_30%]` mobile, `grid-cols-[15%_70%_15%]` desktop)
 
 ---
 
-## 6. Core Features
+## 6. Navigation (as built)
 
-### 6.1 Responsive Navigation
-- **Desktop:** Horizontal navbar with logo (left) and nav links (right)
-- **Mobile:** Logo (left), hamburger icon (right)
-- **Active state:** Current section link highlighted in orange
-- **Smooth scroll:** Clicking nav links scrolls to section (no page reload)
+**4 links, not 5.** Home absorbs what was originally planned as a separate Hero + About split. This was a deliberate consolidation, not a placeholder.
 
-**Sections linked:**
-1. Hero
-2. Portfolio
-3. Skills
-4. About
-5. Contact
+1. Home (Hero + About combined)
+2. Skills
+3. Portfolio
+4. Contact
+
+Sticky header, gradient dark background, hamburger collapse on mobile with slide-down `hidden`/`flex` toggle and auto-close on link click.
 
 ---
 
-### 6.2 Hero Section
-- **Headline:** "Full-Stack JavaScript Developer" with short tagline
-- **CTA button:** "Explore My Work" (orange, hover state darker orange)
-- **Background:** Subtle gradient or neutral pattern (not distracting)
-- **Copy-to-clipboard:** Email icon + tooltip ("Copy email"); clicking adds checkmark confirm
+## 7. Core Features
 
----
+### 7.1 Home Section — ✅ Built
+Headline, intro copy, secondary paragraph, two CTAs (View Portfolio / Get In Touch), stat row (5 projects / 9 skills / JS foundation).
 
-### 6.3 Projects Grid
-**Layout:** 3 columns (desktop), 2 columns (tablet), 1 column (mobile)
+### 7.2 Skills Section & Graph — 🟡 Partially built
+- ✅ 9 verified skill nodes with click-to-expand descriptions (`aria-expanded` toggle, works without a mouse)
+- ✅ SVG edge-drawing between skill and project nodes on desktop hover
+- ✅ `overflow: visible` fix on `#graph-svg` so edges don't clip at different breakpoints
+- ✅ Fade-on-hover: non-connected skill/project nodes dim to reduce visual noise from lines crossing near unrelated nodes
+- 🔲 Mobile tap-to-reveal (drafted, not yet merged with the existing accordion click handler — see Known Issues)
+- 🔲 Click-a-technique → scroll to its first project
+- 🔲 Click-a-project → highlight its techniques
 
-**Default View:**
-- Project screenshot (SVG embedded)
-- Project title
-- Short description (1–2 sentences)
-- Tech badges (HTML5, CSS3, JavaScript, API, localStorage, etc.)
-- Buttons: [View Demo] [GitHub]
+**Verified skill → project mapping (9 skills, matches implementation):**
+| Skill | Projects |
+|---|---|
+| Form Validation | 04, 07 |
+| localStorage Persistence | 04, 06 |
+| Custom Expression Parser | 03 |
+| API / Fetch | 08 |
+| Modal Dialogs | 03, 04, 07 |
+| Array Methods (map/filter) | 04 |
+| DOM Manipulation | 03, 04, 06, 07 |
+| Async/Await | 08 |
+| Event Delegation | 04, 06 |
 
-**Engineering Notes Toggle (Second View):**
-- Same card, same image
-- Hidden by default; toggle to reveal:
-  - **Problem:** What did it solve? (1–2 sentences)
-  - **Key Decision:** A technical choice made and why (1–2 sentences)
-  - **Challenge:** What was hard? (1–2 sentences)
-  - **Hindsight:** What I'd change with experience? (1–2 sentences)
+### 7.3 Portfolio Section — ✅ Built
+`renderProjects()` builds all 5 cards from `projectsMetadata.js`. Each card has:
+- Default view: image, title, short description, tech/tag badges, Demo + GitHub buttons
+- Engineering notes view: Problem / Key Decision / Challenge / Hindsight
+- Toggle between views via two buttons per card, event-delegated on the grid container (single listener, not per-card)
 
----
-
-### 6.4 Contact Form
-- **Fields:** Name, Email, Message (all required)
-- **Validation:** 
-  - Client-side: non-empty, valid email format
-  - Show error message inline if invalid
-- **Submission:**
-  - Uses Netlify Forms (add `netlify` attribute to `<form>`)
-  - On success: Show "Message sent!" toast (green, auto-dismiss 3s)
-  - On failure: Show "Failed to send. Try again." (red)
-
----
-
-## 7. Signature Features (Build Priority Order)
-
-### 7.1 Command Palette (Ctrl+K)
-**Purpose:** Structural navigation layer — primary way to jump between sections.
-
-**Behavior:**
-- Press **Ctrl+K** (or Cmd+K on Mac) → overlay appears
-- Modal with search box (dark background)
-- Shows all available commands (sections, projects by name, quick actions)
-- **Search:** Type to filter commands in real-time
-- **Arrow keys:** Up/Down navigate; selected item highlighted in orange
-- **Enter:** Execute selected command (scroll to section, open demo, etc.)
-- **Esc:** Close palette
-
-**Commands:**
-- Navigate to Hero (`H`)
-- Navigate to Portfolio (`P`)
-- Navigate to Skills (`S`)
-- Navigate to About (`A`)
-- Navigate to Contact (`C`)
-- Jump to Project: [Project name] for each of 5 projects
-- Open GitHub profile (`G`)
-- Copy email to clipboard (`E`)
-
----
-
-### 7.2 Project Card Engineering Notes Toggle
-**Purpose:** Surface real problem-solving, not just features.
-
-**Implementation:**
-- Add toggle button to each project card
-- Clicking toggles between default view and engineering-notes view
-- Smooth fade/slide transition
-- Content from `projectsMetadata.js`
-
----
-
-### 7.3 Skill/Technique Graph
-**Purpose:** Show *which* techniques are used in *which* projects.
-
-**Visual Design:**
-- Interactive graph/network diagram (SVG)
-- Nodes: techniques (circles, labeled)
-- Edges: connections to projects (thin lines)
-
-**Techniques** (verified from actual code):
-1. Form Validation → Projects: 04, 07
-2. localStorage Persistence → Projects: 04, 06
-3. Custom Expression Parser → Project: 03
-4. API/Fetch → Project: 08
-5. Modal Dialogs → Projects: 03, 04, 07
-6. Array Methods (map/filter) → Project: 04
-7. DOM Manipulation → Projects: 03, 04, 06, 07
-8. Async/Await → Project: 08
-9. Event Delegation → Projects: 04, 06
-
-**Interactions:**
-- **Hover a technique:** Highlight that technique, fade non-connected projects
-- **Click a technique:** Scroll to first project using that technique
-- **Click a project:** Highlight all techniques used in that project
-- **Mobile:** Tap behavior (no hover); swipe to browse
-
----
-
-## 8. Polish Features
-
-### 8.1 Copy-to-Clipboard Email
-- Small icon (envelope or copy icon, 20×20px) next to email
-- On hover: Tooltip appears ("Copy email address")
-- On click: Email copied to clipboard, icon changes to checkmark (green)
-- After 2 seconds: Icon reverts to original
-- Fallback: If clipboard API unavailable, show alert
-
-### 8.2 Print-Friendly Resume
-- Subtle "Print Resume" button in footer or About section
-- Clicking triggers `window.print()`
-- Print stylesheet (`@media print`) hides nav, hero, skills, footer
-- Shows: Name, summary, 5 projects (title + description + link), contact info
-
----
-
-## 9. The 5 Projects — Verified Real Features
-
+**The 5 projects (unchanged from v1, verified against source):**
 | # | Project | Real Features |
 |---|---|---|
-| **03** | Utility Calculator + BMI | Full calculator (custom expression parsing, operator precedence) + BMI modal. No eval(). |
-| **04** | Student Record System | Tabbed UI, edit-in-place table records, live search filtering, auto report-card generation with letter grades. |
-| **06** | Theme Switcher | 6 full themes (Light, Dark, Fire, Water, Earth, Wind), each with complete color palette. Toggle button + dropdown. localStorage persistence. |
-| **07** | Quiz App | Data-driven from `quizData.js` ES6 module. Categories: HTML, CSS, JavaScript. Per-category timers, question jump buttons, custom dialogs. |
-| **08** | Weather App | Real API integration (Open-Meteo), state machine (Idle → Loading → Success/Error), °F/°C toggle, timeout handling. |
+| 03 | Utility Calculator + BMI | Custom expression parser with operator precedence, no `eval()`, BMI modal |
+| 04 | Student Record System | Tabbed UI, edit-in-place records, live search filter, auto report-card generation |
+| 06 | Theme Switcher | 6 full themes, toggle + dropdown, localStorage persistence |
+| 07 | Quiz App | Data-driven via ES6 module, per-category timers, question jump buttons, custom dialogs |
+| 08 | Weather App | Open-Meteo API, explicit state machine (Idle → Loading → Success/Error), °F/°C toggle, timeout handling |
+
+### 7.4 Contact Section — 🟡 Partially built
+- ✅ Correct Netlify wiring: hidden `form-name` input, honeypot field, `data-netlify="true"` + `netlify` attribute (more robust than v1's simplified example)
+- ✅ Two-panel layout: form (left) + dark info panel (right) with stat block and social/email links
+- 🔲 Submit handling, client-side validation, and status messaging not yet in `script.js`
+- 🔲 Copy-to-clipboard button exists in markup with no click handler
+- ⚠️ Right info panel is `hidden md:flex` — mobile visitors see the bare form only, no stats/email/social. Confirm this is intentional before launch.
+
+### 7.5 Command Palette (Ctrl+K) — 🔲 Not built
+No DOM element, no JS. Deferred; not required for v1 launch (see §3 Non-Goals note).
+
+### 7.6 Polish features — 🔲 Not built
+- Print-friendly resume (`window.print()` + print stylesheet)
+- Active-nav-link-on-scroll highlighting
 
 ---
 
-## 10. Data Structure Templates
+## 8. Data Structure Templates
 
-### 10.1 `src/data/projectsMetadata.js`
-
-Template structure for each project. Create 5 objects (one per project: 03, 04, 06, 07, 08):
-
+### `src/data/projectsMetadata.js`
 ```javascript
 export const projects = [
   {
-    id: '03',  // Project folder number
+    id: '03',
     title: 'Project Title',
     shortDescription: '1–2 sentence summary',
-    fullDescription: 'Longer description of features and approach',
-    technologies: ['Technology 1', 'Technology 2', 'Technology 3'],
+    fullDescription: 'Longer description',
+    technologies: ['Tech 1', 'Tech 2'],
     image: '/assets/images/03-project-name.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_3/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_3',
     engineeringNotes: {
-      problem: 'What problem did this solve? (1–2 sentences)',
-      keyDecision: 'Key technical choice made and why (1–2 sentences)',
-      challenge: 'What was difficult to implement? (1–2 sentences)',
-      hindsight: 'What would you do differently? (1–2 sentences)'
+      problem: '...',
+      keyDecision: '...',
+      challenge: '...',
+      hindsight: '...'
     },
-    skillsUsed: ['Skill Name', 'Skill Name']  // Must match ids from skillGraphData.js
+    skillsUsed: ['skill-id-1', 'skill-id-2']
   }
-  // Repeat for projects 04, 06, 07, 08
 ];
 ```
 
-**Field definitions:**
-- `id`: Project folder number ('03', '04', '06', '07', '08')
-- `technologies`: List of tech used (displayed as badges on card)
-- `skillsUsed`: Must reference skill `id` values from skillGraphData.js for graph linking
-- `engineeringNotes`: Real problem/decision/challenge/hindsight (not marketing copy)
-
----
-
-### 10.2 `src/data/skillGraphData.js`
-
-Template structure for each technique. Create 9 objects (one per verified skill):
-
+### `src/data/skillGraphData.js`
 ```javascript
 export const skills = [
   {
-    id: 'kebab-case-id',      // Used in skillsUsed array above
+    id: 'kebab-case-id',
     name: 'Skill Display Name',
-    category: 'Category Name',  // Groups related skills
-    icon: '/assets/icons/skill-name.svg',
-    projects: ['03', '04'],     // Which project IDs use this skill
-    description: 'One-line description of what this skill is.'
+    projects: ['03', '04'],
+    description: 'One-line description.'
   }
-  // Repeat for all 9 verified skills (see Section 9)
 ];
 ```
 
-**Verified skills mapping:**
-1. Form Validation → Projects: 04, 07
-2. localStorage Persistence → Projects: 04, 06
-3. Custom Expression Parser → Project: 03
-4. API / Fetch → Project: 08
-5. Modal Dialogs → Projects: 03, 04, 07
-6. Array Methods (map/filter) → Project: 04
-7. DOM Manipulation → Projects: 03, 04, 06, 07
-8. Async/Await → Project: 08
-9. Event Delegation → Projects: 04, 06
+---
+
+## 9. Known Issues / Open Threads
+
+1. **Mobile skill graph interaction** — a `matchMedia('(hover: hover) and (pointer: fine)')` gate has been drafted to split desktop hover vs mobile tap so the two never bind simultaneously (avoids the synthetic-mouseenter-before-click issue on touchscreens). Still needs to be merged with the existing `.skill-toggle` accordion click handler so tap-to-show-graph and tap-to-expand-description share one state instead of drifting apart.
+2. **Mobile contact panel** — right info panel is fully hidden below `md`. Decide whether to surface a condensed version (e.g. just email + social icons) on mobile instead of dropping it entirely.
+3. **Placeholder content** — footer/contact social links (GitHub, LinkedIn, Twitter) are generic URLs; `mailto:` is a placeholder; `<head>` meta tags (`og:title`, `og:url`, etc.) are generic. All need real values before deploy.
 
 ---
 
-## 11. Netlify Configuration
+## 10. Accessibility Requirements
 
-Add `netlify` attribute to contact form:
-
-```html
-<form name="contact" method="POST" netlify>
-  <input type="text" name="name" placeholder="Your Name" required />
-  <input type="email" name="email" placeholder="Your Email" required />
-  <textarea name="message" placeholder="Your Message" required></textarea>
-  <button type="submit">Send</button>
-</form>
-```
-
-Netlify automatically creates form endpoint and stores submissions in dashboard.
+- Keyboard navigation: all interactive elements reachable via Tab, Enter, Arrow keys, Esc (where applicable)
+- Color contrast: WCAG AA (4.5:1 normal text, 3:1 large text)
+- Semantic HTML: `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, `<form>`
+- Alt text on all images
+- Skill node descriptions already use accessible disclosure pattern (`aria-expanded`) rather than hover-only
 
 ---
 
-## 12. Accessibility Requirements
+## 11. Deployment Checklist
 
-- ✅ **Keyboard navigation:** All interactive elements fully accessible via Tab, Enter, Arrow keys, Esc
-- ✅ **Color contrast:** All text meets WCAG AA standard (4.5:1 for normal text, 3:1 for large text)
-- ✅ **Semantic HTML:** Proper use of `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, `<form>`
-- ✅ **ARIA roles:** Command palette modal has `role="dialog"`, form errors have `role="alert"`
-- ✅ **Alt text:** Images have descriptive alt text
-- ✅ **Skip link:** Hidden skip-to-main-content link for screen readers
-
----
-
-## 13. Browser Support
-
-- ✅ Chrome/Edge (latest 2 versions)
-- ✅ Firefox (latest 2 versions)
-- ✅ Safari (latest 2 versions)
-- ✅ Mobile browsers (Chrome mobile, Safari mobile)
+- [ ] Netlify form test submission
+- [ ] Replace all placeholder URLs and emails
+- [ ] Build command verified: `npm run build`
+- [ ] Cross-browser check (Chrome, Firefox, Safari, mobile)
+- [ ] Lighthouse pass (performance ≥90, accessibility ≥95, SEO ≥90)
 
 ---
 
-## 14. Performance Targets
-
-| Metric | Target |
-|--------|--------|
-| **Lighthouse Performance** | ≥90 |
-| **Lighthouse Accessibility** | ≥95 |
-| **Lighthouse SEO** | ≥90 |
-| **Page load time** | <2s (first contentful paint) |
-| **Bundle size** | <50KB (JS + CSS gzipped) |
-
----
-
-## 15. Development Timeline
-
-### Phase 1: Setup & Skeleton (Week 1)
-- Vite + Tailwind configuration
-- HTML skeleton (all sections, placeholders)
-- Responsive nav + hamburger
-- Hero section
-
-### Phase 2: Core Features (Week 2–3)
-- Command palette (Ctrl+K)
-- Projects grid layout + project card structure
-- Project card toggle (default ↔ engineering notes)
-
-### Phase 3: Advanced Features (Week 3–4)
-- Skill graph (SVG rendering)
-- Skill/project hover interactions
-- Contact form + validation + Netlify setup
-
-### Phase 4: Polish (Week 4–5)
-- Copy-to-clipboard email
-- Print resume stylesheet
-- Animations & transitions
-- Mobile testing & refinement
-
-### Phase 5: Testing & Documentation (Week 5–6)
-- Cross-browser testing
-- Accessibility audit
-- Compile dev-log.md → presentation-notes.md
-- Final git cleanup + deploy
-
----
-
-## 16. Naming Conventions
-
-- **Files/Folders:** kebab-case (e.g., `skill-graph.js`, `contact-form.html`)
-- **JS Variables:** camelCase (e.g., `projectsGrid`, `handleKeyDown`)
-- **JS Classes:** PascalCase (e.g., `CommandPalette`, `SkillGraph`)
-- **Constants:** SCREAMING_SNAKE_CASE (e.g., `MAX_RESULTS = 10`)
-- **Booleans:** Prefix with `is` or `has` (e.g., `isOpen`, `hasError`)
-
----
-
-## 17. File Structure (Final)
-
-```
-Assessment_Project_9/
-├── index.html
-├── src/
-│   ├── script.js
-│   ├── styles.css
-│   └── data/
-│       ├── projectsMetadata.js
-│       └── skillGraphData.js
-├── assets/
-│   ├── images/
-│   │   ├── 03-utility-calculator-bmi.svg
-│   │   ├── 04-student-record-system.svg
-│   │   ├── 06-theme-switcher.svg
-│   │   ├── 07-quiz-app.svg
-│   │   └── 08-weather-app.svg
-│   └── icons/
-│       ├── form-validation.svg
-│       ├── localstorage.svg
-│       ├── custom-parser.svg
-│       ├── fetch-api.svg
-│       ├── modal-dialogs.svg
-│       ├── array-methods.svg
-│       ├── dom-manipulation.svg
-│       ├── async-await.svg
-│       └── event-delegation.svg
-├── docs/
-│   ├── PRD.md
-│   ├── dev-log.md
-│   └── presentation-notes.md
-├── .gitignore
-├── package.json
-├── package-lock.json
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-└── README.md
-```
-
----
-
-## 18. Success Criteria
-
-**Functional:**
-- [ ] All 5 projects render with correct metadata and links
-- [ ] Command palette works (Ctrl+K, search, arrow nav, Enter to execute)
-- [ ] Project card toggle shows/hides engineering notes smoothly
-- [ ] Skill graph renders and responds to hover/click
-- [ ] Contact form validates, submits, and Netlify receives submissions
-- [ ] Copy-to-clipboard works (or falls back gracefully)
-
-**Quality:**
-- [ ] Responsive design works on mobile, tablet, desktop
-- [ ] Accessibility: lighthouse ≥95, keyboard nav complete, color contrast pass
-- [ ] No console errors or warnings
-- [ ] Page load time <2s
-
-**Presentation:**
-- [ ] Git history uses Conventional Commits throughout
-- [ ] dev-log.md updated during development
-- [ ] presentation-notes.md compiles challenges, lessons, and growth narrative
-
----
-
-## 19. Deployment Checklist
-
-- [ ] Netlify form setup (test submission)
-- [ ] Custom domain configured (if applicable)
-- [ ] Build command tested: `npm run build`
-- [ ] Dist folder contents verified
-- [ ] Live site tested on multiple browsers
-- [ ] Lighthouse audit run (targets met)
-
----
-
-**Document Status:** Ready for Phase 1 Development  
-**Approval Date:** 2026-08-06  
-**Next Step:** Commit Phase 1 (Setup & Skeleton)
+**Document status:** Reflects build as of this update. Update again once command palette, form handling, and mobile graph interaction ship.
