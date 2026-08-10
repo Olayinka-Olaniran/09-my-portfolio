@@ -645,7 +645,7 @@ copyEmailBtn?.addEventListener('click', copyEmailToClipboard);
 
 // Contact form
 contactForm?.addEventListener('submit', handleContactSubmit);
-document.addEventListener('click', (e) => { if (!e.target.closest('#contact-form')) clearFormStatus(); });
+document.addEventListener('click', (e) => { if (!e.target.closest('#form-status')) clearFormStatus(); });
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
