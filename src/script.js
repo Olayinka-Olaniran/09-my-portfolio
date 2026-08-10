@@ -562,12 +562,12 @@ document.querySelectorAll('.skill-toggle').forEach(btn => {
 // Skill nodes: hover (desktop) or tap (mobile)
 document.querySelectorAll('.skill-node').forEach(skillEl => {
   const projectIds = skills[skillEl.dataset.index].projects;
-
+  const displayDescBtn = skillEl.querySelector('.skill-toggle');
   if (supportsHover) {
     skillEl.addEventListener('mouseenter', () => showSkillGraph(skillEl, projectIds));
     skillEl.addEventListener('mouseleave', resetGraph);
   } else {
-    skillEl.addEventListener('click', () => {
+    displayDescBtn.addEventListener('click', () => {
       const wasActive = skillEl.classList.contains('graph-active');
       document.querySelectorAll('.graph-active').forEach(el => el.classList.remove('graph-active'));
       resetGraph();
