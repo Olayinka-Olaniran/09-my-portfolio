@@ -11,7 +11,7 @@ export const projects = [
     shortDescription: 'A full-featured calculator with custom expression parsing and a built-in BMI calculator in a modal.',
     fullDescription: 'Handles arithmetic (+, −, ×, ÷) with proper operator precedence using custom string parsing (no eval()). Includes a separate BMI calculation mode accessed via a modal dialog.',
     technologies: ['JavaScript', 'HTML5', 'CSS3'],
-    image: '/assets/images/03-utility-calculator-bmi.svg',
+    image: './assets/images/03-utility-calculator-bmi.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_3/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_3',
     engineeringNotes: {
@@ -30,7 +30,7 @@ export const projects = [
     shortDescription: 'Tabbed records manager with live search, editable student data, and automatic report card generation.',
     fullDescription: 'Add, update, and delete student records inline in a table. Live search filters by name. Automatic calculation of totals and averages. Generate per-student report cards with letter grades and personalized remarks based on performance.',
     technologies: ['JavaScript', 'HTML5', 'CSS3'],
-    image: '/assets/images/04-student-record-system.svg',
+    image: './assets/images/04-student-record-system.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_4/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_4',
     engineeringNotes: {
@@ -49,7 +49,7 @@ export const projects = [
     shortDescription: '6-theme UI switcher (Light, Dark, Fire, Water, Earth, Wind) with persistent user preference.',
     fullDescription: 'Dynamic theming system with 6 fully-fledged color palettes. Switch themes via toggle button or dropdown. User preference saved to localStorage and restored on page load.',
     technologies: ['JavaScript', 'HTML5', 'CSS3'],
-    image: '/assets/images/06-theme-switcher.svg',
+    image: './assets/images/06-theme-switcher.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_6/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_6',
     engineeringNotes: {
@@ -68,7 +68,7 @@ export const projects = [
     shortDescription: 'Timed, category-based quiz with HTML/CSS/JavaScript topics, data-driven from a reusable config file.',
     fullDescription: 'Select a category (HTML, CSS, or JavaScript), answer timed questions with instant feedback, navigate via numbered jump buttons. All questions and feedback live in a separate data file (quizData.js), making the app reusable.',
     technologies: ['JavaScript', 'HTML5', 'CSS3', 'ES6 Modules'],
-    image: '/assets/images/07-quiz-app.svg',
+    image: './assets/images/07-quiz-app.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_7/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_7',
     engineeringNotes: {
@@ -87,7 +87,7 @@ export const projects = [
     shortDescription: 'Real-time weather lookup using Open-Meteo API with state machine error handling and °F/°C toggle.',
     fullDescription: 'Select a location, fetch live weather data, toggle between Celsius and Fahrenheit. Explicit state machine handles Idle → Loading → Success/Error flow with distinct UI per state.',
     technologies: ['JavaScript', 'HTML5', 'CSS3'],
-    image: '/assets/images/08-weather-app.svg',
+    image: './assets/images/08-weather-app.svg',
     demoUrl: 'https://olayinka-olaniran.github.io/Assessment_Project_8/',
     repoUrl: 'https://github.com/Olayinka-Olaniran/Assessment_Project_8',
     engineeringNotes: {
