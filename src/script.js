@@ -2,20 +2,46 @@ import { projects } from './data/projectsMetadata.js';
 import { skills } from './data/skillGraphData.js';
 import './styles.css';
 
+// ============================================================
+// DOM QUERIES
+// ============================================================
 const menuToggle = document.getElementById('menu-toggle');
 const mobileMenu = document.getElementById('menu');
+const projectsGrid = document.getElementById('projects-grid');
 
+const svg = document.querySelector('#graph-svg');
+const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+const commandPalette = document.getElementById('command-palette');
+const paletteSearch = document.getElementById('palette-search');
+const paletteResults = document.getElementById('palette-results');
+const paletteEmpty = document.getElementById('palette-empty');
+const paletteTriggers = document.querySelectorAll('.palette-trigger');
+
+const copyEmailBtn = document.getElementById('copy-email-btn');
+const emailAddress = 'oolaniran853@gmail.com';
+
+const navSections = document.querySelectorAll('main section[id]');
+const navLinks = document.querySelectorAll('#menu a[href^="#"], nav a[href^="#"]');
+
+// ============================================================
+// STATE
+// ============================================================
+let paletteFiltered = [];
+let paletteActiveIndex = 0;
+
+// ============================================================
+// PROJECT RENDERING (Portfolio section)
+// ============================================================
 function renderProjects() {
-  const projectsGrid = document.getElementById('projects-grid');
   if (!projectsGrid) return;
-  projectsGrid.innerHTML = ''; // Clear existing content
+  projectsGrid.innerHTML = '';
 
   projects.forEach(project => {
     const card = document.createElement('div');
-    card.id = `portfolio-${project.id}`; // matches #portfolio-XX links from the skill graph
+    card.id = `portfolio-${project.id}`;
     card.className = 'projects-card flex flex-col justify-end bg-slate-800 rounded-lg overflow-hidden border border-slate-700 shadow-lg';
     card.innerHTML = `
-      <!-- Toggle View Buttons -->
       <div class="toggle-view flex justify-end gap-2 p-3 bg-slate-900 border-b border-slate-700">
         <button class="toggle-view-btn view-default bg-orange-400 hover:bg-orange-500 p-2 rounded transition active"
                 data-project-id="${project.id}" data-view="default" title="Project Overview">
@@ -32,21 +58,16 @@ function renderProjects() {
         </button>
       </div>
 
-      <!-- Project Image (hidden when engineering notes are shown) -->
       <div class="project-image-${project.id} relative w-full bg-slate-700 flex flex-1 items-center justify-center border-b border-slate-700 shrink-0">
         ${project.image
           ? `<img src="${project.image}" alt="${project.title}" class=" object-contain w-auto h-auto">`
           : 'Project Image'}
       </div>
 
-      <!-- Project Content -->
       <div class="p-5 bg-slate-800 flex-1 flex flex-col">
-        <!-- Default View -->
         <div class="view-content default-view-${project.id} h-full flex flex-col">
           <h3 class="text-lg font-bold text-white mb-2">${project.title}</h3>
           <p class="text-slate-300 text-sm mb-4">${project.shortDescription ?? ''}</p>
-
-          <!-- Tech Badges -->
           <div class="flex gap-2 flex-wrap mb-5">
             ${(project.technologies ?? [])
               .map(t => `<span class="bg-slate-700 border-slate-900 text-orange-400 px-3 py-1 rounded-full text-xs font-medium">${t}</span>`)
@@ -55,15 +76,12 @@ function renderProjects() {
               .map(t => `<span class="bg-slate-700 text-orange-300 px-3 py-1 rounded-full text-xs font-medium">${t}</span>`)
               .join('')}
           </div>
-
-          <!-- Action Buttons -->
           <div class="flex gap-2 mt-auto">
             ${project.demoUrl ? `<a href="${project.demoUrl}" target="_blank" rel="noopener" class="flex-1 text-center bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium px-4 py-2 rounded transition">Demo</a>` : ''}
             ${project.repoUrl ? `<a href="${project.repoUrl}" target="_blank" rel="noopener" class="flex-1 text-center bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium px-4 py-2 rounded transition">GitHub</a>` : ''}
           </div>
         </div>
 
-        <!-- Engineering Notes View (hidden by default) -->
         <div class="view-content hidden engineering-view-${project.id} h-full flex flex-col">
           <div class="space-y-3">
             <div>
@@ -89,7 +107,6 @@ function renderProjects() {
     projectsGrid.appendChild(card);
   });
 
-  // Single delegated listener — avoids inline onclick + window pollution
   projectsGrid.addEventListener('click', (e) => {
     const btn = e.target.closest('.toggle-view-btn');
     if (!btn) return;
@@ -104,80 +121,122 @@ function toggleView(projectId, view, clickedBtn) {
   if (!defaultView || !engineeringView) return;
 
   const showDefault = view === 'default';
-
   defaultView.classList.toggle('hidden', !showDefault);
   engineeringView.classList.toggle('hidden', showDefault);
+  if (imageEl) imageEl.classList.toggle('hidden', !showDefault);
 
-  // Image only makes sense alongside the default overview —
-  // hide it for engineering notes to reclaim vertical space
-  if (imageEl) {
-    imageEl.classList.toggle('hidden', !showDefault);
-  }
-
-  // Reflect active state on the toggle buttons
   const toggleGroup = clickedBtn.closest('.toggle-view');
   if (toggleGroup) {
-    toggleGroup.querySelectorAll('.toggle-view-btn').forEach(b => b.classList.remove('bg-orange-400', 'hover:bg-orange-500'));
-    toggleGroup.querySelectorAll('.toggle-view-btn').forEach(b => b.classList.add('bg-slate-700', 'text-slate-300', 'hover:text-orange-500'));
+    toggleGroup.querySelectorAll('.toggle-view-btn').forEach(b => {
+      b.classList.remove('bg-orange-400', 'hover:bg-orange-500');
+      b.classList.add('bg-slate-700', 'text-slate-300', 'hover:text-orange-500');
+    });
   }
   clickedBtn.classList.add('bg-orange-400', 'hover:bg-orange-500');
   clickedBtn.classList.remove('bg-slate-700', 'text-slate-300', 'hover:text-orange-500');
 }
 
-function toSvgPoint(svg, clientX, clientY) {
-  const pt = svg.createSVGPoint();
+// ============================================================
+// SKILL GRAPH — coordinate math
+// ============================================================
+function toSvgPoint(svgEl, clientX, clientY) {
+  const pt = svgEl.createSVGPoint();
   pt.x = clientX;
   pt.y = clientY;
-  return pt.matrixTransform(svg.getScreenCTM().inverse());
+  return pt.matrixTransform(svgEl.getScreenCTM().inverse());
 }
 
-function getCenterInSvg(svg, el) {
+function getCenterInSvg(svgEl, el) {
   const r = el.getBoundingClientRect();
-  return toSvgPoint(svg, r.left + r.width / 2, r.top + r.height / 2);
+  return toSvgPoint(svgEl, r.left + r.width / 2, r.top + r.height / 2);
 }
 
-function drawEdge(svg, fromEl, toEl, id) {
-  const from = getCenterInSvg(svg, fromEl);
-  const to = getCenterInSvg(svg, toEl);
+// ============================================================
+// SKILL GRAPH — visual defs (glow filter)
+// Injected once into #graph-svg so every edge can reference it.
+// ============================================================
+function initGraphDefs(svgEl) {
+  if (svgEl.querySelector('#graph-defs')) return;
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.id = 'graph-defs';
+  defs.innerHTML = `
+    <filter id="edge-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  `;
+  svgEl.prepend(defs);
+}
+
+// ============================================================
+// SKILL GRAPH — edge drawing
+// ============================================================
+function drawEdge(svgEl, fromEl, toEl, id) {
+  const from = getCenterInSvg(svgEl, fromEl);
+  const to = getCenterInSvg(svgEl, toEl);
+
+  const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  group.classList.add('edge');
+  group.id = id;
 
   const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  line.id = id;
-  line.classList.add('edge');
-  line.setAttribute('stroke', 'black');
+  line.setAttribute('stroke', '#f97316');       // orange-500, matches site accent
   line.setAttribute('stroke-width', '2');
-  line.setAttribute('marker-end', 'url(#arrowhead)');
+  line.setAttribute('stroke-linecap', 'round');
+  line.setAttribute('filter', 'url(#edge-glow)'); // soft glow so lines read as "active energy," not flat rulers
   line.setAttribute('x1', from.x);
   line.setAttribute('y1', from.y);
   line.setAttribute('x2', to.x);
   line.setAttribute('y2', to.y);
-  svg.appendChild(line);
+
+  // ---- Grow-in animation instead of snapping into view ----
+  const length = Math.hypot(to.x - from.x, to.y - from.y);
+  line.setAttribute('stroke-dasharray', length);
+  line.setAttribute('stroke-dashoffset', length);
+  line.style.transition = 'stroke-dashoffset 280ms ease-out';
+  // Double rAF — a single frame can land in the same paint as the initial
+  // offset, so the transition never visibly triggers. Nesting two frames
+  // guarantees the starting state has actually painted first.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      line.style.strokeDashoffset = '0';
+    });
+  });
+
+  group.appendChild(line);
+
+  // Small pulsing dots at each endpoint — highlights exactly where the
+  // connection lands on both nodes.
+  [from, to].forEach(point => {
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('cx', point.x);
+    dot.setAttribute('cy', point.y);
+    dot.setAttribute('r', '3.5');
+    dot.setAttribute('fill', '#fb923c'); // orange-400, slightly lighter than the line
+
+    const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+    pulse.setAttribute('attributeName', 'r');
+    pulse.setAttribute('values', '3;5;3');
+    pulse.setAttribute('dur', '1.4s');
+    pulse.setAttribute('repeatCount', 'indefinite');
+    dot.appendChild(pulse);
+
+    group.appendChild(dot);
+  });
+
+  svgEl.appendChild(group);
 }
 
+function clearEdges(svgEl) {
+  svgEl.querySelectorAll('.edge').forEach(e => e.remove());
+}
 
-const svg = document.querySelector('#graph-svg'); // your middle 70%/40% column
-const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-// ---- Accordion toggle (works on all breakpoints/devices) ----
-document.querySelectorAll('.skill-toggle').forEach(btn => {
-  const descEl = document.getElementById(btn.getAttribute('aria-controls'));
-  btn.addEventListener('click', () => {
-    const isOpen = btn.getAttribute('aria-expanded') === 'true';
-
-    // close every other open description first
-    document.querySelectorAll('.skill-toggle[aria-expanded="true"]').forEach(otherBtn => {
-      if (otherBtn === btn) return;
-      otherBtn.setAttribute('aria-expanded', 'false');
-      const otherDesc = document.getElementById(otherBtn.getAttribute('aria-controls'));
-      if (otherDesc) otherDesc.classList.add('hidden');
-    });
-
-    // then toggle this one based on its own prior state
-    btn.setAttribute('aria-expanded', String(!isOpen));
-    if (descEl) descEl.classList.toggle('hidden', isOpen);
-  });
-});
-
-// ---- Graph drawing / fading ----
+// ============================================================
+// SKILL GRAPH — fade + highlight state
+// ============================================================
 function fadeNodes({ activeSkillEls = [], activeProjectIds = [] } = {}) {
   document.querySelectorAll('.skill-node').forEach(el => {
     el.style.transition = 'opacity 150ms ease';
@@ -221,12 +280,200 @@ function showProjectGraph(projectEl, skillIndices) {
   skillEls.forEach((skillEl, n) => drawEdge(svg, skillEl, projectEl, `edge-skill-${n}`));
 }
 
-
-function clearEdges(svg) {
-  svg.querySelectorAll('.edge').forEach(e => e.remove());
+// ============================================================
+// COMMAND PALETTE
+// ============================================================
+function scrollToSection(selector) {
+  document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ---- Skill nodes: hover (desktop) or tap (mobile) ----
+function buildCommands() {
+  const staticCommands = [
+    { label: 'Go to Home', key: 'H', action: () => scrollToSection('#home') },
+    { label: 'Go to Skills', key: 'S', action: () => scrollToSection('#skills') },
+    { label: 'Go to Portfolio', key: 'P', action: () => scrollToSection('#portfolio') },
+    { label: 'Go to Contact', key: 'C', action: () => scrollToSection('#contact') },
+    { label: 'Open GitHub profile', key: 'G', action: () => window.open('https://github.com/Olayinka-Olaniran', '_blank') },
+    { label: 'Copy email address', key: 'E', action: () => copyEmailBtn?.click() },
+  ];
+
+  const projectCommands = projects.map(project => ({
+    label: `Jump to project: ${project.title}`,
+    key: '',
+    action: () => scrollToSection(`#portfolio-${project.id}`)
+  }));
+
+  return [...staticCommands, ...projectCommands];
+}
+
+const allCommands = buildCommands();
+
+function openPalette() {
+  commandPalette.classList.remove('hidden');
+  commandPalette.classList.add('flex');
+  paletteSearch.value = '';
+  renderPaletteResults(allCommands);
+  paletteSearch.focus();
+  document.body.style.overflow = 'hidden';
+}
+
+function closePalette() {
+  commandPalette.classList.add('hidden');
+  commandPalette.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+
+function renderPaletteResults(results) {
+  paletteFiltered = results;
+  paletteActiveIndex = 0;
+  paletteEmpty.classList.toggle('hidden', results.length > 0);
+
+  paletteResults.innerHTML = results
+    .map((cmd, idx) => `
+      <li class="palette-result px-4 py-2.5 flex items-center justify-between cursor-pointer text-sm text-slate-200 ${idx === 0 ? 'bg-orange-500/10 text-orange-400' : ''}"
+          data-index="${idx}" role="option" aria-selected="${idx === 0}">
+        <span>${cmd.label}</span>
+        ${cmd.key ? `<kbd class="text-[10px] text-slate-500 border border-slate-700 rounded px-1.5 py-0.5">${cmd.key}</kbd>` : ''}
+      </li>
+    `)
+    .join('');
+
+  paletteResults.querySelectorAll('.palette-result').forEach(el => {
+    el.addEventListener('click', () => executeCommand(parseInt(el.dataset.index, 10)));
+    el.addEventListener('mousemove', () => setActiveIndex(parseInt(el.dataset.index, 10)));
+  });
+}
+
+function setActiveIndex(idx) {
+  paletteActiveIndex = idx;
+  paletteResults.querySelectorAll('.palette-result').forEach(el => {
+    const isActive = parseInt(el.dataset.index, 10) === idx;
+    el.classList.toggle('bg-orange-500/10', isActive);
+    el.classList.toggle('text-orange-400', isActive);
+    el.setAttribute('aria-selected', String(isActive));
+    if (isActive) el.scrollIntoView({ block: 'nearest' });
+  });
+}
+
+function executeCommand(idx) {
+  const cmd = paletteFiltered[idx];
+  if (!cmd) return;
+  closePalette();
+  cmd.action();
+}
+
+// ============================================================
+// COPY EMAIL
+// ============================================================
+function showCopyFeedback(btn) {
+  const label = document.createElement('span');
+  label.textContent = 'Copied!';
+  label.className = 'text-xs text-green-400 ml-1';
+  btn.insertAdjacentElement('afterend', label);
+  btn.setAttribute('aria-label', 'Email copied');
+  setTimeout(() => {
+    label.remove();
+    btn.setAttribute('aria-label', 'Copy email address');
+  }, 2000);
+}
+
+async function copyEmailToClipboard() {
+  try {
+    await navigator.clipboard.writeText(emailAddress);
+    showCopyFeedback(copyEmailBtn);
+  } catch {
+    const textarea = document.createElement('textarea');
+    textarea.value = emailAddress;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showCopyFeedback(copyEmailBtn);
+    } catch {
+      alert(`Copy failed — email is ${emailAddress}`);
+    }
+    document.body.removeChild(textarea);
+  }
+}
+
+// ============================================================
+// SCROLL-SPY NAV HIGHLIGHTING
+// ============================================================
+function setActiveNavLink(sectionId) {
+  navLinks.forEach(link => {
+    const isActive = link.getAttribute('href') === `#${sectionId}`;
+    link.classList.toggle('text-orange-500', isActive);
+  });
+}
+
+function initScrollSpy() {
+  if (!navSections.length || !navLinks.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveNavLink(entry.target.id);
+        }
+      });
+    },
+    {
+      // Section counts as "current" once it crosses roughly the upper third
+      // of the viewport — -100px on top roughly clears the sticky header so
+      // a section isn't flagged active while still hidden behind it.
+      rootMargin: '-100px 0px -60% 0px',
+      threshold: 0
+    }
+  );
+
+  navSections.forEach(section => observer.observe(section));
+}
+
+// ============================================================
+// INIT (runs once, before listeners attach)
+// ============================================================
+if (svg) initGraphDefs(svg);
+initScrollSpy();
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+
+// Mobile hamburger menu
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('flex');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+    });
+  });
+}
+
+// Skill description accordion (single-open)
+document.querySelectorAll('.skill-toggle').forEach(btn => {
+  const descEl = document.getElementById(btn.getAttribute('aria-controls'));
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+    document.querySelectorAll('.skill-toggle[aria-expanded="true"]').forEach(otherBtn => {
+      if (otherBtn === btn) return;
+      otherBtn.setAttribute('aria-expanded', 'false');
+      const otherDesc = document.getElementById(otherBtn.getAttribute('aria-controls'));
+      if (otherDesc) otherDesc.classList.add('hidden');
+    });
+
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    if (descEl) descEl.classList.toggle('hidden', isOpen);
+  });
+});
+
+// Skill nodes: hover (desktop) or tap (mobile)
 document.querySelectorAll('.skill-node').forEach(skillEl => {
   const projectIds = skills[skillEl.dataset.index].projects;
 
@@ -246,7 +493,7 @@ document.querySelectorAll('.skill-node').forEach(skillEl => {
   }
 });
 
-// ---- Project nodes: hover (desktop) or tap (mobile) ----
+// Project nodes: hover (desktop) or tap (mobile)
 document.querySelectorAll('.project-node').forEach(projectEl => {
   const skillIndices = getSkillIndicesForProject(projectEl.id);
 
@@ -258,12 +505,11 @@ document.querySelectorAll('.project-node').forEach(projectEl => {
       document.querySelectorAll('.graph-active').forEach(el => el.classList.remove('graph-active'));
       projectEl.classList.add('graph-active');
       showProjectGraph(projectEl, skillIndices);
-      // native <a href="#portfolio-XX"> still navigates after this runs
     });
   }
 });
 
-// ---- Tap outside clears state (mobile only) ----
+// Tap outside clears graph state (mobile only)
 if (!supportsHover) {
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.skill-node') && !e.target.closest('.project-node')) {
@@ -273,61 +519,45 @@ if (!supportsHover) {
   });
 }
 
-if (menuToggle && mobileMenu) {
-  menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-    mobileMenu.classList.toggle('flex');
-  });
+// Command palette
+paletteSearch?.addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase().trim();
+  const filtered = query ? allCommands.filter(c => c.label.toLowerCase().includes(query)) : allCommands;
+  renderPaletteResults(filtered);
+});
 
-  // Close menu when a nav link is clicked
-  const mobileNavLinks = mobileMenu.querySelectorAll('a');
-  mobileNavLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
-      mobileMenu.classList.remove('flex');
-    });
-  });
-}
+paletteSearch?.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    setActiveIndex(Math.min(paletteActiveIndex + 1, paletteFiltered.length - 1));
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    setActiveIndex(Math.max(paletteActiveIndex - 1, 0));
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    executeCommand(paletteActiveIndex);
+  } else if (e.key === 'Escape') {
+    closePalette();
+  }
+});
 
-const copyEmailBtn = document.getElementById('copy-email-btn');
-const emailAddress = 'oolaniran853@gmail.com';
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    commandPalette.classList.contains('hidden') ? openPalette() : closePalette();
+  }
+});
 
-if (copyEmailBtn) {
-  copyEmailBtn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(emailAddress);
-      showCopyFeedback(copyEmailBtn);
-    } catch {
-      // fallback for browsers without Clipboard API or non-secure context
-      const textarea = document.createElement('textarea');
-      textarea.value = emailAddress;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand('copy');
-        showCopyFeedback(copyEmailBtn);
-      } catch {
-        alert(`Copy failed — email is ${emailAddress}`);
-      }
-      document.body.removeChild(textarea);
-    }
-  });
-}
+paletteTriggers.forEach(btn => btn.addEventListener('click', openPalette));
 
-function showCopyFeedback(btn) {
-  const label = document.createElement('span');
-  label.textContent = 'Copied!';
-  label.className = 'text-xs text-green-400 ml-1';
-  btn.insertAdjacentElement('afterend', label);
-  btn.setAttribute('aria-label', 'Email copied');
-  setTimeout(() => {
-    label.remove();
-    btn.setAttribute('aria-label', 'Copy email address');
-  }, 2000);
-}
+commandPalette?.addEventListener('click', (e) => {
+  if (e.target === commandPalette) closePalette();
+});
 
+// Copy email
+copyEmailBtn?.addEventListener('click', copyEmailToClipboard);
+
+// Init
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Portfolio website loaded');
   renderProjects();

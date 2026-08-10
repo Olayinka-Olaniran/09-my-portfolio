@@ -27,39 +27,44 @@
     </head>
 
     <body> 
-        <header class="sticky top-0 left-0 bg-linear-to-r from-slate-900 to-slate-700 flex flex-row flex-wrap justify-around items-center text-white mb-3 h-auto w-full border-bottom  z-50 shadow-lg">
-            
-            <div class="flex flex-row justify-center text-2xl font-bold  w-1/2 text-center items-center p-2 ">
-                
+        <header class="sticky top-0 left-0 bg-linear-to-r from-slate-900 to-slate-700 flex flex-row flex-wrap justify-around items-center text-white mb-3 h-auto w-full border-bottom z-50 shadow-lg">
+
+            <div class="flex flex-row justify-center text-2xl font-bold w-1/2 text-center items-center p-2">
                 <div class="relative w-8.5 h-8.5 rounded-full overflow-hidden shadow-2xl group">
-                    <!-- 1. Your Original Multi-Layer Image -->
-                    <img 
-                        src="./assets/icons/Logo.png" 
-                        alt="Mountain Graphic" 
-                        class="w-full h-full object-cover scale-110 contrast-110 brightness-95" 
-                    />
-                    <!-- 2. The Color Harmonizer Overlay (Blends the layers together) -->
+                    <img src="./assets/icons/Logo.png" alt="Mountain Graphic" class="w-full h-full object-cover scale-110 contrast-110 brightness-95" />
                     <div class="absolute inset-0 bg-indigo-900/20 mix-blend-color pointer-events-none"></div>
-                    <!-- 3. The Atmospheric Lighting Tint (Softens harsh cloud & stairs transitions) -->
                     <div class="absolute inset-0 bg-linear-to-t from-blue-950/40 via-transparent to-pink-400/10 mix-blend-overlay pointer-events-none"></div>
                 </div>
                 <h1 class="w-8/10 text-start pl-2">Olayinka</h1>
             </div>
 
-            <button id="menu-toggle" class="flex md:hidden p-2  w-1/2 justify-end">
-                <!-- Hamburger menu button for smaller screens -->
-                <svg class="w-10 h-10 rounded-sm bg-linearto-r from-gray-700 to-gray-500 active:bg-linear-to-r active:from-gray-900 active:to-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+            <!-- Mobile-only controls slot — same w-1/2 the hamburger alone used to occupy -->
+            <div class="flex md:hidden items-center justify-end gap-2 p-2 w-1/2">
+                <button type="button" class="palette-trigger flex items-center gap-1 text-xs text-slate-300 border border-slate-600 rounded px-2 py-1.5 hover:border-orange-500 hover:text-orange-400 transition" aria-label="Open command palette">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+                    </svg>
+                </button>
+                <button id="menu-toggle" class="p-1" aria-label="Toggle navigation menu">
+                    <svg class="w-10 h-10 rounded-sm bg-linearto-r from-gray-700 to-gray-500 active:bg-linear-to-r active:from-gray-900 active:to-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
 
-            <nav id="menu" class="hidden w-full md:flex flex-row md:flex-row items-center md:w-1/2 h-full">
-                <!-- Navigation menu with links to different sections of the website and collapses into a hamburger menu on smaller screens -->
-                <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#home">Home</a>
-                <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#skills">Skills</a>
-                <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#portfolio">Portfolio</a>
-                <a class="font-bold text-center p-3 w-1/4 hover:text-orange-500 transition-colors" href="#contact">Contact</a>
+            <nav id="menu" class="hidden w-full md:flex flex-row items-center md:w-1/2 h-full">
+                <a class="font-bold text-center p-3 flex-1 hover:text-orange-600 transition-colors" href="#home">Home</a>
+                <a class="font-bold text-center p-3 flex-1 hover:text-orange-600 transition-colors" href="#skills">Skills</a>
+                <a class="font-bold text-center p-3 flex-1 hover:text-orange-600 transition-colors" href="#portfolio">Portfolio</a>
+                <a class="font-bold text-center p-3 flex-1 hover:text-orange-600 transition-colors" href="#contact">Contact</a>
+                <button type="button" class="palette-trigger hidden md:flex items-center gap-1.5 text-xs text-slate-300 border border-slate-600 rounded px-2 py-1.5 mr-2 hover:border-orange-500 hover:text-orange-400 transition" aria-label="Open command palette">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+                    </svg>
+                    <span>⌘K</span>
+                </button>
             </nav>
+
         </header>
 
         <main class="main-container flex flex-col gap-6 px-3 md:px-7 mx-auto">
@@ -206,60 +211,61 @@
                         <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">Send</button>
                     </form>
 
-                   <div class="hidden md:flex flex-1 max-w-sm flex-col justify-between bg-linear-to-br from-slate-900 to-slate-800 rounded-r-lg border border-slate-300 shadow-inner p-6 relative overflow-hidden">
+                   <div class="flex flex-1 md:max-w-sm flex-col justify-between bg-linear-to-br from-slate-900 to-slate-800 rounded-b-lg md:rounded-r-lg md:rounded-bl-none border border-slate-300 shadow-inner p-6 relative overflow-hidden">
 
-    <!-- decorative blobs -->
-    <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/20 rounded-full blur-2xl"></div>
-    <div class="absolute -left-10 bottom-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl"></div>
+                        <!-- decorative blobs -->
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-orange-500/20 rounded-full blur-2xl"></div>
+                        <div class="absolute -left-10 bottom-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl"></div>
 
-    <!-- subtle dot grid pattern -->
-    <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 16px 16px;"></div>
+                        <!-- subtle dot grid pattern -->
+                        <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 16px 16px;"></div>
 
-    <!-- top: intro -->
-    <div class="relative z-10">
-        <h3 class="text-white font-bold text-lg mb-2">Let's build something great</h3>
-        <p class="text-slate-300 text-sm leading-relaxed">
-            Whether it's a project, an opportunity, or just a question — I usually reply within a day.
-        </p>
-    </div>
+                        <!-- top: intro -->
+                        <div class="relative z-10">
+                            <h3 class="text-white font-bold text-lg mb-2">Let's build something great</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                Whether it's a project, an opportunity, or just a question — I usually reply within a day.
+                            </p>
+                        </div>
 
-    <!-- middle: stat block (fills the dead space) -->
-    <div class="relative z-10 grid grid-cols-3 gap-2 border-y border-white/10 py-5 my-6">
-        <div class="text-center">
-            <p class="text-orange-500 font-bold text-xl">5+</p>
-            <p class="text-slate-400 text-[11px] leading-tight mt-1">Built<br>Projects</p>
-        </div>
-        <div class="text-center">
-            <p class="text-orange-500 font-bold text-xl">9+</p>
-            <p class="text-slate-400 text-[11px] leading-tight mt-1">Core<br>Techniques</p>
-        </div>
-        <div class="text-center">
-            <p class="text-orange-500 font-bold text-xl">&lt;24h</p>
-            <p class="text-slate-400 text-[11px] leading-tight mt-1">Avg. Reply<br>Time</p>
-        </div>
-    </div>
+                        <!-- middle: stat block (fills the dead space) -->
+                        <div class="relative z-10 grid grid-cols-3 gap-2 border-y border-white/10 py-5 my-6">
+                            <div class="text-center">
+                                <p class="text-orange-500 font-bold text-xl">5+</p>
+                                <p class="text-slate-400 text-[11px] leading-tight mt-1">Built<br>Projects</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-orange-500 font-bold text-xl">9+</p>
+                                <p class="text-slate-400 text-[11px] leading-tight mt-1">Core<br>Techniques</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-orange-500 font-bold text-xl">&lt;24h</p>
+                                <p class="text-slate-400 text-[11px] leading-tight mt-1">Avg. Reply<br>Time</p>
+                            </div>
+                        </div>
 
-    <!-- bottom: contact links -->
-    <div class="relative z-10 flex flex-col gap-3">
-        <div class="flex items-center gap-2 text-sm text-slate-200">
-            <img src="/assets/icons/mail.svg" class="w-5 h-5 invert" alt="">
-            <a href="mailto:oolaniran853@gmail.com" class="hover:text-orange-400 transition-colors" aria-label="Email oolaniran853@gmail.com">
-                oolaniran853@gmail.com
-            </a>
-            <button id="copy-email-btn" type="button" aria-label="Copy email address" class="hover:cursor-pointer">
-                <img src="/assets/icons/copy.svg" title="Copy Email" class="w-5 h-5 hover:transform hover:scale-110 hover:cursor-pointer transition-all duration-100 active:translate-y-0.5 invert" alt="">
-            </button>
-        </div>
-        <a href="https://github.com/Olayinka-Olaniran" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="flex items-center gap-2 text-sm text-slate-200 hover:text-orange-500 transition-colors">
-            <img src="/assets/icons/github.svg" alt="GitHub" class="w-5 h-5 invert">
-            GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/olayinka-olaniran-a2ba063a2" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="flex items-center gap-2 text-sm text-slate-200 hover:text-orange-500 transition-colors">
-            <img src="/assets/icons/linkedin.svg" alt="LinkedIn" class="w-5 h-5 invert">
-            LinkedIn
-        </a>
-    </div>
-</div>
+                        <!-- bottom: contact links -->
+                        <div class="relative z-10 flex flex-col gap-3">
+                            <div class="flex items-center gap-2 text-sm text-slate-200">
+                                <img src="./assets/icons/mail.svg" class="w-5 h-5 invert" alt="">
+                                <a href="mailto:oolaniran853@gmail.com" class="hover:text-orange-400 transition-colors" aria-label="Email oolaniran853@gmail.com">
+                                    oolaniran853@gmail.com
+                                </a>
+                                <button id="copy-email-btn" type="button" aria-label="Copy email address" class="hover:cursor-pointer">
+                                    <img src="./assets/icons/copy.svg" title="Copy Email" class="w-5 h-5 hover:transform hover:scale-110 hover:cursor-pointer transition-all duration-100 active:translate-y-0.5 invert" alt="">
+                                </button>
+                            </div>
+                            <a href="https://github.com/Olayinka-Olaniran" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="flex items-center gap-2 text-sm text-slate-200 hover:text-orange-500 transition-colors">
+                                <img src="./assets/icons/github.svg" alt="GitHub" class="w-5 h-5 invert">
+                                GitHub
+                            </a>
+                            <a href="https://www.linkedin.com/in/olayinka-olaniran-a2ba063a2" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="flex items-center gap-2 text-sm text-slate-200 hover:text-orange-500 transition-colors">
+                                <img src="./assets/icons/linkedin.svg" alt="LinkedIn" class="w-5 h-5 invert">
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
 
@@ -274,18 +280,35 @@
 
             <div class="flex flex-row gap-4">
                 <a href="https://github.com/Olayinka-Olaniran" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-orange-500 transition-colors">
-                    <img src="/assets/icons/github.svg" alt="GitHub" class="w-5 h-5 invert">
+                    <img src="./assets/icons/github.svg" alt="GitHub" class="w-5 h-5 invert">
                 </a>
                 <a href="https://www.linkedin.com/in/olayinka-olaniran-a2ba063a2" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-orange-500 transition-colors">
-                    <img src="/assets/icons/linkedin.svg" alt="LinkedIn" class="w-5 h-5 invert">
+                    <img src="./assets/icons/linkedin.svg" alt="LinkedIn" class="w-5 h-5 invert">
                 </a>
                 <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="hover:text-orange-500 transition-colors">
-                    <img src="/assets/icons/twitter.svg" alt="Twitter" class="w-5 h-5 invert">
+                    <img src="./assets/icons/twitter.svg" alt="Twitter" class="w-5 h-5 invert">
                 </a>
             </div>
 
             <p class="text-sm text-slate-300">&copy; 2026 Olayinka Olaniran. All rights reserved.</p>
         </footer>
-        <script type="module" src="/src/script.js"></script>
+
+        <!-- Command Palette -->
+        <div id="command-palette" class="hidden fixed inset-0 z-100 items-start justify-center pt-24 bg-slate-950/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="w-full max-w-lg mx-4 bg-slate-900 border border-slate-700 rounded-lg shadow-2xl overflow-hidden">
+            <div class="flex items-center gap-2 px-4 border-b border-slate-700">
+            <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+            </svg>
+            <input id="palette-search" type="text" placeholder="Type a command or search…" autocomplete="off"
+                    class="w-full bg-transparent text-white placeholder-slate-500 py-3 focus:outline-none text-sm">
+            <kbd class="text-[10px] text-slate-500 border border-slate-700 rounded px-1.5 py-0.5">Esc</kbd>
+            </div>
+            <ul id="palette-results" class="max-h-80 overflow-y-auto py-2" role="listbox"></ul>
+            <p id="palette-empty" class="hidden text-center text-sm text-slate-500 py-6">No matching commands</p>
+        </div>
+        </div>
+
+        <script type="module" src="./src/script.js"></script>
     </body>
 </html>
