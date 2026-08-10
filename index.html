@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="./src/styles.css">
     </head>
 
-    <body> 
+    <body>
         <header class="sticky top-0 left-0 bg-linear-to-r from-slate-900 to-slate-700 flex flex-row flex-wrap justify-around items-center text-white mb-3 h-auto w-full border-bottom z-50 shadow-lg">
 
             <div class="flex flex-row justify-center text-2xl font-bold w-1/2 text-center items-center p-2">
@@ -40,13 +40,13 @@
 
             <!-- Mobile-only controls slot — same w-1/2 the hamburger alone used to occupy -->
             <div class="flex md:hidden items-center justify-end gap-2 p-2 w-1/2">
-                <button type="button" class="palette-trigger flex items-center gap-1 text-xs text-slate-300 border border-slate-600 rounded px-2 py-1.5 hover:border-orange-500 hover:text-orange-400 transition" aria-label="Open command palette">
+                <button type="button" class="palette-trigger flex items-center gap-1 text-xs text-slate-300 border border-slate-600 rounded px-2 py-1.5 hover:border-orange-500 hover:text-orange-400 transition" aria-label="Open command palette" aria-haspopup="dialog" aria-controls="command-palette" aria-expanded="false">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
                     </svg>
                 </button>
-                <button id="menu-toggle" class="p-1" aria-label="Toggle navigation menu">
-                    <svg class="w-10 h-10 rounded-sm bg-linearto-r from-gray-700 to-gray-500 active:bg-linear-to-r active:from-gray-900 active:to-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <button id="menu-toggle" class="p-1" aria-label="Toggle navigation menu" aria-controls="menu" aria-expanded="false">
+                    <svg class="w-10 h-10 rounded-sm bg-linearto-r from-gray-700 to-gray-500 active:bg-linear-to-r active:from-gray-900 active:to-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
@@ -57,7 +57,7 @@
                 <a class="font-bold text-center p-3 flex-1 hover:text-orange-600 transition-colors" href="#skills">Skills</a>
                 <a class="font-bold text-center p-3 flex-1 hover:text-orange-600 transition-colors" href="#portfolio">Portfolio</a>
                 <a class="font-bold text-center p-3 flex-1 hover:text-orange-600 transition-colors" href="#contact">Contact</a>
-                <button type="button" class="palette-trigger hidden md:flex items-center gap-1.5 text-xs text-slate-300 border border-slate-600 rounded px-2 py-1.5 mr-2 hover:border-orange-500 hover:text-orange-400 transition" aria-label="Open command palette">
+                <button type="button" class="palette-trigger hidden md:flex items-center gap-1.5 text-xs text-slate-300 border border-slate-600 rounded px-2 py-1.5 mr-2 hover:border-orange-500 hover:text-orange-400 transition" aria-label="Open command palette" aria-haspopup="dialog" aria-controls="command-palette" aria-expanded="false">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
                     </svg>
@@ -173,7 +173,7 @@
                         <h3 id="project-06" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-06" class="hover:text-orange-500 transition-colors">Theme Switcher</a></h3>
                         <h3 id="project-07" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-07" class="hover:text-orange-500 transition-colors">Quiz App</a></h3>
                         <h3 id="project-08" class="project-node text-xs md:text-sm font-bold bg-white border border-slate-300 rounded-md shadow-md p-2 md:p-3"><a href="#portfolio-08" class="hover:text-orange-500 transition-colors">Weather App</a></h3>
-                    </div>   
+                    </div>
                 </div>
             </section>
 
@@ -208,7 +208,9 @@
                         <label for="message" class="text-sm font-medium text-slate-700">Message:</label>
                         <textarea class="border-slate-700 border-2 bg-slate-50 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-orange-500" id="message" name="message" rows="4" required></textarea>
 
-                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">Send</button>
+                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed">Send</button>
+
+                        <p id="form-status" role="status" aria-live="polite" class="text-sm min-h-5"></p>
                     </form>
 
                    <div class="flex flex-1 md:max-w-sm flex-col justify-between bg-linear-to-br from-slate-900 to-slate-800 rounded-b-lg md:rounded-r-lg md:rounded-bl-none border border-slate-300 shadow-inner p-6 relative overflow-hidden">
@@ -300,11 +302,11 @@
             <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
             </svg>
-            <input id="palette-search" type="text" placeholder="Type a command or search…" autocomplete="off"
+            <input id="palette-search" type="text" placeholder="Type a command or search…" autocomplete="off" aria-label="Search commands"
                     class="w-full bg-transparent text-white placeholder-slate-500 py-3 focus:outline-none text-sm">
             <kbd class="text-[10px] text-slate-500 border border-slate-700 rounded px-1.5 py-0.5">Esc</kbd>
             </div>
-            <ul id="palette-results" class="max-h-80 overflow-y-auto py-2" role="listbox"></ul>
+            <ul id="palette-results" class="max-h-80 overflow-y-auto py-2" role="listbox" aria-label="Command results"></ul>
             <p id="palette-empty" class="hidden text-center text-sm text-slate-500 py-6">No matching commands</p>
         </div>
         </div>

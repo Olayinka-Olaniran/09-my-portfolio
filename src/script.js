@@ -24,11 +24,15 @@ const emailAddress = 'oolaniran853@gmail.com';
 const navSections = document.querySelectorAll('main section[id]');
 const navLinks = document.querySelectorAll('#menu a[href^="#"], nav a[href^="#"]');
 
+const contactForm = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+
 // ============================================================
 // STATE
 // ============================================================
 let paletteFiltered = [];
 let paletteActiveIndex = 0;
+let paletteTriggerEl = null;
 
 // ============================================================
 // PROJECT RENDERING (Portfolio section)
@@ -44,17 +48,19 @@ function renderProjects() {
     card.innerHTML = `
       <div class="toggle-view flex justify-end gap-2 p-3 bg-slate-900 border-b border-slate-700">
         <button class="toggle-view-btn view-default bg-orange-400 hover:bg-orange-500 p-2 rounded transition active"
-                data-project-id="${project.id}" data-view="default" title="Project Overview">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                data-project-id="${project.id}" data-view="default" title="Project Overview" aria-pressed="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M12 5C7 5 2.73 8.11 1 12.46c1.73 4.35 6 7.54 11 7.54s9.27-3.19 11-7.54C21.27 8.11 17 5 12 5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" fill="currentColor"/>
             <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
           </svg>
+          <span class="sr-only">Project Overview</span>
         </button>
         <button class="toggle-view-btn view-code bg-slate-700 text-slate-300 hover:text-orange-500 p-2 rounded transition"
-                data-project-id="${project.id}" data-view="engineering-notes" title="Engineering Notes">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                data-project-id="${project.id}" data-view="engineering-notes" title="Engineering Notes" aria-pressed="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M9 18L3 12L9 6M15 18L21 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          <span class="sr-only">Engineering Notes</span>
         </button>
       </div>
 
@@ -128,12 +134,15 @@ function toggleView(projectId, view, clickedBtn) {
   const toggleGroup = clickedBtn.closest('.toggle-view');
   if (toggleGroup) {
     toggleGroup.querySelectorAll('.toggle-view-btn').forEach(b => {
-      b.classList.remove('bg-orange-400', 'hover:bg-orange-500');
-      b.classList.add('bg-slate-700', 'text-slate-300', 'hover:text-orange-500');
+      const isActive = b === clickedBtn;
+      b.classList.toggle('bg-orange-400', isActive);
+      b.classList.toggle('hover:bg-orange-500', isActive);
+      b.classList.toggle('bg-slate-700', !isActive);
+      b.classList.toggle('text-slate-300', !isActive);
+      b.classList.toggle('hover:text-orange-500', !isActive);
+      b.setAttribute('aria-pressed', String(isActive));
     });
   }
-  clickedBtn.classList.add('bg-orange-400', 'hover:bg-orange-500');
-  clickedBtn.classList.remove('bg-slate-700', 'text-slate-300', 'hover:text-orange-500');
 }
 
 // ============================================================
@@ -308,19 +317,28 @@ function buildCommands() {
 
 const allCommands = buildCommands();
 
-function openPalette() {
+function openPalette(triggerEl) {
+  paletteTriggerEl = triggerEl ?? null;
   commandPalette.classList.remove('hidden');
   commandPalette.classList.add('flex');
   paletteSearch.value = '';
   renderPaletteResults(allCommands);
   paletteSearch.focus();
   document.body.style.overflow = 'hidden';
+  paletteTriggers.forEach(t => t.setAttribute('aria-expanded', 'true'));
 }
 
 function closePalette() {
   commandPalette.classList.add('hidden');
   commandPalette.classList.remove('flex');
   document.body.style.overflow = '';
+  paletteTriggers.forEach(t => t.setAttribute('aria-expanded', 'false'));
+  // Return focus to whatever opened the palette, so keyboard users
+  // aren't dropped back at the top of the page.
+  if (paletteTriggerEl) {
+    paletteTriggerEl.focus();
+    paletteTriggerEl = null;
+  }
 }
 
 function renderPaletteResults(results) {
@@ -432,6 +450,71 @@ function initScrollSpy() {
 }
 
 // ============================================================
+// CONTACT FORM — client-side validation + async submit feedback
+// ============================================================
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function clearFormStatus() {
+  if (!formStatus) return;
+  formStatus.textContent = '';
+  formStatus.classList.remove('text-red-600', 'text-green-600', 'text-slate-500');
+}
+
+function setFormStatus(message, tone = 'info') {
+  if (!formStatus) return;
+  formStatus.textContent = message;
+  formStatus.classList.remove('text-red-600', 'text-green-600', 'text-slate-500');
+  const toneClass = tone === 'success' ? 'text-green-600' : tone === 'error' ? 'text-red-600' : 'text-slate-500';
+  formStatus.classList.add(toneClass);
+}
+
+function validateContactForm() {
+  const name = contactForm.name.value.trim();
+  const email = contactForm.email.value.trim();
+  const message = contactForm.message.value.trim();
+
+  if (!name || !email || !message) {
+    setFormStatus('Please fill in every field before sending.', 'error');
+    return false;
+  }
+  if (!EMAIL_PATTERN.test(email)) {
+    setFormStatus('Please enter a valid email address.', 'error');
+    return false;
+  }
+  return true;
+}
+
+async function handleContactSubmit(e) {
+  e.preventDefault();
+  if (!validateContactForm()) return;
+
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const originalLabel = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+  setFormStatus('Sending your message…', 'info');
+
+  try {
+    const formData = new FormData(contactForm);
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    });
+
+    if (!response.ok) throw new Error(`Submission failed with status ${response.status}`);
+
+    setFormStatus("Thanks — your message is on its way. I'll reply within a day.", 'success');
+    contactForm.reset();
+  } catch (err) {
+    setFormStatus('Something went wrong sending that — please email me directly instead.', 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalLabel;
+  }
+}
+
+// ============================================================
 // INIT (runs once, before listeners attach)
 // ============================================================
 if (svg) initGraphDefs(svg);
@@ -444,13 +527,16 @@ initScrollSpy();
 // Mobile hamburger menu
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
+    const willOpen = mobileMenu.classList.contains('hidden');
     mobileMenu.classList.toggle('hidden');
     mobileMenu.classList.toggle('flex');
+    menuToggle.setAttribute('aria-expanded', String(willOpen));
   });
   mobileMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       mobileMenu.classList.add('hidden');
       mobileMenu.classList.remove('flex');
+      menuToggle.setAttribute('aria-expanded', 'false');
     });
   });
 }
@@ -544,11 +630,11 @@ paletteSearch?.addEventListener('keydown', (e) => {
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
     e.preventDefault();
-    commandPalette.classList.contains('hidden') ? openPalette() : closePalette();
+    commandPalette.classList.contains('hidden') ? openPalette(document.activeElement) : closePalette();
   }
 });
 
-paletteTriggers.forEach(btn => btn.addEventListener('click', openPalette));
+paletteTriggers.forEach(btn => btn.addEventListener('click', () => openPalette(btn)));
 
 commandPalette?.addEventListener('click', (e) => {
   if (e.target === commandPalette) closePalette();
@@ -556,6 +642,10 @@ commandPalette?.addEventListener('click', (e) => {
 
 // Copy email
 copyEmailBtn?.addEventListener('click', copyEmailToClipboard);
+
+// Contact form
+contactForm?.addEventListener('submit', handleContactSubmit);
+document.addEventListener('click', (e) => { if (!e.target.closest('#contact-form')) clearFormStatus(); });
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
