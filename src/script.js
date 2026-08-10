@@ -524,49 +524,47 @@ initScrollSpy();
 // EVENT LISTENERS
 // ============================================================
 
-// Mobile hamburger menu
-if (menuToggle && mobileMenu) {
-  menuToggle.addEventListener('click', () => {
-    const willOpen = mobileMenu.classList.contains('hidden');
-    mobileMenu.classList.toggle('hidden');
-    mobileMenu.classList.toggle('flex');
-    menuToggle.setAttribute('aria-expanded', String(willOpen));
-  });
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
-      mobileMenu.classList.remove('flex');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    });
+// Mobile hamburger menu — commented out per supervisor: non-standard
+// implementation, unnecessary now that nav links wrap onto their own line.
+// Left in place in case this needs to come back later.
+// if (menuToggle && mobileMenu) {
+//   menuToggle.addEventListener('click', () => {
+//     const willOpen = mobileMenu.classList.contains('hidden');
+//     mobileMenu.classList.toggle('hidden');
+//     mobileMenu.classList.toggle('flex');
+//     menuToggle.setAttribute('aria-expanded', String(willOpen));
+//   });
+//   mobileMenu.querySelectorAll('a').forEach(link => {
+//     link.addEventListener('click', () => {
+//       mobileMenu.classList.add('hidden');
+//       mobileMenu.classList.remove('flex');
+//       menuToggle.setAttribute('aria-expanded', 'false');
+//     });
+//   });
+// }
+
+// Skill description accordion (single-open)
+// Shared close logic so aria-expanded and the hidden class can never
+// disagree — the toggle handler and the mobile outside-tap handler both
+// route through this instead of touching the DOM/attributes separately.
+function closeAllSkillDescriptions(exceptBtn = null) {
+  document.querySelectorAll('.skill-toggle[aria-expanded="true"]').forEach(btn => {
+    if (btn === exceptBtn) return;
+    btn.setAttribute('aria-expanded', 'false');
+    const desc = document.getElementById(btn.getAttribute('aria-controls'));
+    if (desc) desc.classList.add('hidden');
   });
 }
 
-// Skill description accordion (single-open)
 document.querySelectorAll('.skill-toggle').forEach(btn => {
   const descEl = document.getElementById(btn.getAttribute('aria-controls'));
   btn.addEventListener('click', () => {
     const isOpen = btn.getAttribute('aria-expanded') === 'true';
-
-    document.querySelectorAll('.skill-toggle[aria-expanded="true"]').forEach(otherBtn => {
-      if (otherBtn === btn) return;
-      otherBtn.setAttribute('aria-expanded', 'false');
-      const otherDesc = document.getElementById(otherBtn.getAttribute('aria-controls'));
-      if (otherDesc) otherDesc.classList.add('hidden');
-    });
-
+    closeAllSkillDescriptions(btn);
     btn.setAttribute('aria-expanded', String(!isOpen));
     if (descEl) descEl.classList.toggle('hidden', isOpen);
   });
 });
-
-//clears skill description when clicking outside (mobile only)
-if (!supportsHover) {
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.skill-node')) {
-      document.querySelectorAll('.skill-description').forEach(el => el.classList.add('hidden'));
-    }
-  });
-}
 
 // Skill nodes: hover (desktop) or tap (mobile)
 document.querySelectorAll('.skill-node').forEach(skillEl => {
@@ -604,13 +602,16 @@ document.querySelectorAll('.project-node').forEach(projectEl => {
   }
 });
 
-// Tap outside clears graph state (mobile only)
+// Tap outside clears graph state and open description (mobile only)
 if (!supportsHover) {
+  document.querySelector(".desktop-only")?.classList.add("hidden");//hide "hover on or" text on mobile as mobile users can't hover
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('.skill-node') && !e.target.closest('.project-node')) {
+    const insideSkillNode = e.target.closest('.skill-node');
+    if (!insideSkillNode && !e.target.closest('.project-node')) {
       document.querySelectorAll('.graph-active').forEach(el => el.classList.remove('graph-active'));
       resetGraph();
     }
+    if (!insideSkillNode) closeAllSkillDescriptions();
   });
 }
 
