@@ -559,6 +559,15 @@ document.querySelectorAll('.skill-toggle').forEach(btn => {
   });
 });
 
+//clears skill description when clicking outside (mobile only)
+if (!supportsHover) {
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.skill-node')) {
+      document.querySelectorAll('.skill-description').forEach(el => el.classList.add('hidden'));
+    }
+  });
+}
+
 // Skill nodes: hover (desktop) or tap (mobile)
 document.querySelectorAll('.skill-node').forEach(skillEl => {
   const projectIds = skills[skillEl.dataset.index].projects;
